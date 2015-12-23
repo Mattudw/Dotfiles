@@ -1,0 +1,97 @@
+#!/usr/bin/env bash
+#Fetch info about your system
+#
+# Created by Dylan Araps
+# https://github.com/dylanaraps/dotfiles
+
+# Formatting
+
+# Set to nothing to disable bold text
+bold=$(tput bold)
+
+# Clears attributes
+clear=$(tput sgr0)
+
+# Default color
+# colors are now defined with a launch option "-c"
+color=$(tput setaf 1)
+
+# Custom Image
+
+# If usewall=1 then fetch will use a cropped version of your wallpaper as the img
+#usewall=0
+
+# The default image to use if usewall=0
+#img="$HOME/Pictures/pic.jpg"
+
+# Image width/height/offset
+#width=268
+#height=268
+#yoffset=50
+#xoffset=82
+
+# Padding to align text to the right
+#pad="                             "
+
+# Other
+
+# Title
+# title can also be changed with -t
+# To use the usual "user@hostname" change the line below to:
+# title="$(whoami)@$(hostname)"
+title="Unicorn"
+
+# Custom text to print at the bottom, configurable at launch with "-e"
+#customtext=$(colors2.sh)
+
+# Set up args
+while getopts ":c:e:w:h:t:p:x:y:" opt; do
+    case $opt in
+        c) color=$(tput setaf $OPTARG) ;;
+        e) customtext="$OPTARG" ;;
+        w) width="$OPTARG" ;;
+        h) height="$OPTARG" ;;
+        t) title="$OPTARG" ;;
+        p) pad="$OPTARG" ;;
+        x) xoffset="$OPTARG" ;;
+        y) yoffset="$OPTARG" ;;
+    esac
+done
+
+# Get image from wallpaper
+# Requires feh
+if [ $usewall -eq 1 ]; then
+    wallpaper=$(cat $HOME/.fehbg | awk '/feh/ {printf $3}' | sed -e "s/'//g")
+
+    # Directory to store cropped wallpapers.
+    walltempdir="$HOME/.wallpaper"
+
+    # Check if the directory exists
+    if [ ! -d "$walltempdir" ]; then
+        mkdir "$walltempdir" || echo "Failed to create wallpaper dir"; exit
+    fi
+
+# Underline title with length of title
+underline=$(printf %"${#title}"s |tr " " "-")
+
+# Start printing info
+
+# Clear terminal before running
+clear
+
+echo "${pad}${bold}$title${clear}"
+echo "${pad}$underline"
+echo "${pad}${bold}${color}OS${clear}: $(cat /etc/*ease | awk '/^NAME=/' | cut -d '"' -f2)"
+echo "${pad}${bold}${color}Kernel${clear}: $(uname -r)"
+echo "${pad}${bold}${color}Uptime${clear}: $(uptime -p | sed -e 's/minutes/mins/')"
+echo "${pad}${bold}${color}Packages${clear}: $(pacman -Q | wc -l)"
+echo "${pad}${bold}${color}Shell${clear}: $SHELL"
+echo "${pad}${bold}${color}Window Manager${clear}: i3"
+echo "${pad}${bold}${color}Cpu${clear}: Intel Core i7-5500U CPU @ 3$(lscpu | awk '/CPU MHz:/ {printf "scale=1; "" / 1000 \n"}' | bc -l)GHz"
+echo "${pad}${bold}${color}Ram${clear}: $(free -m | awk '/Mem:/ {printf $3 "MB / " $2 "MB"}')"
+#echo "${pad}${bold}${color}Screen${clear}: $()"
+#echo
+#echo "$customtext"
+#echo
+#
+#echo -e "0;1;$xoffset;$yoffset;$width;$height;;;;;$img\n4;\n3;" | /usr/lib/w3m/w3mimgdisplay
