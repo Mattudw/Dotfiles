@@ -1,0 +1,37 @@
+[options]
+clickable_url = true
+font = Tewi 9
+
+cursor_shape = block
+
+[colors]
+
+# special
+foreground = #ffffff
+background = rgba(0, 0, 0, 0)
+#background = #000000
+
+# black
+color0 =   #191919
+color8 =   #2e2532
+# red
+color1  =  #9adeea
+color9  =  #9adeea
+# green
+color2 =   #7489a5
+color10 =  #7489a5
+# yellow
+color3 =   #675989
+color11 =  #675989
+# blue
+color4 =   #77238e
+color12 =  #77238e
+# magenta
+color5 =   #9e4770
+color13 =  #9e4770
+# cyan
+color6 =   #d686ca
+color14 =  #d686ca
+# white
+color7 =   #ffffff
+color15 =  #ffffff
