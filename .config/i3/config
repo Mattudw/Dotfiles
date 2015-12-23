@@ -1,0 +1,210 @@
+#######################################################################
+#                              variables                              #
+#######################################################################
+
+set $mod         Mod4
+set $myres       10
+set $gsi         25
+set $gso         100
+
+set $bordersize  0
+
+set $COLOR0     #191919
+set $COLOR8     #2e2532
+set $COLOR15    #ffffff
+
+#######################################################################
+#                           random settings                           #
+#######################################################################
+
+focus_follows_mouse     no
+popup_during_fullscreen smart
+workspace_layout        default
+
+#######################################################################
+#                               colors                                #
+#######################################################################
+
+# Layout colors                 bord           bg             text           indicator (split)
+client.focused                  $COLOR0        $COLOR0        $COLOR0        $COLOR0
+client.focused_inactive         $COLOR0        $COLOR0        $COLOR0        $COLOR0
+client.unfocused                $COLOR0        $COLOR0        $COLOR0        $COLOR0
+client.urgent                   $COLOR0        $COLOR0        $COLOR0        $COLOR0
+client.background               $COLOR0
+
+#######################################################################
+#                                font                                 #
+#######################################################################
+
+font pango: Tewi 8
+
+#######################################################################
+#                               borders                               #
+#######################################################################
+
+#hide_edge_borders       none
+#gaps                    inner $gsi
+#gaps                    outer $gso
+new_float               pixel $bordersize
+new_window              pixel $bordersize
+
+#######################################################################
+#                        notification bindings                        #
+#######################################################################
+
+bindsym                 Print exec scrot
+bindsym                 $mod+Print exec "scrot -s 'scrot_%m-%d-%Y_%H-%M-%S.png' -q 100 -e 'mv $f ~/Pictures/'; notify-send -u low 'screenshot taken'"
+
+#######################################################################
+#                         launcher & terminal                         #
+#######################################################################
+
+bindsym                 $mod+space exec rofi -show run -terminal xterm -font 'Tewi 11' -lines 3 -eh 2 -width 100 -padding 450 -opacity "95" -bw 0 -bc "$COLOR0" -bg "$COLOR0" -fg "$COLOR8" -hlbg "$COLOR0" -hlfg "$COLOR15"
+bindsym                 $mod+Return exec termite
+bindsym                 $mod+c exec setxkbmap fr
+bindsym                 $mod+Shift+f exec eatmydata firefox
+bindsym                 $mod+Shift+s exec /home/gawk/.bin/mntr
+
+#######################################################################
+#                             i3 bindings                             #
+#######################################################################
+
+bindsym                 $mod+Shift+c reload
+bindsym                 $mod+Shift+r restart
+bindsym                 $mod+q kill
+
+#######################################################################
+#                            gaps bindings                            #
+#######################################################################
+
+#bindsym                 $mod+n gaps inner all set 0;gaps outer all set 0
+bindsym                 $mod+m gaps inner all set $gsi;gaps outer all set $gso
+
+#######################################################################
+#                           audio bindings                            #
+#######################################################################
+
+bindsym                 XF86MonBrightnessUp exec xbacklight +5
+bindsym                 XF86MonBrightnessDown exec xbacklight -5
+bindsym                 XF86AudioRaiseVolume exec "amixer -q sset Master,0 2+ unmute"
+bindsym                 XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute"
+bindsym                 XF86AudioMute exec "amixer -q sset Master,0 toggle"
+bindsym                 XF86AudioNext exec mpc next
+bindsym                 XF86AudioPrev exec mpc prev
+bindsym                 XF86AudioPlay exec mpc toggle
+
+#######################################################################
+#                          display bindings                           #
+#######################################################################
+
+bindsym                 $mod+Delete exec "~/.config/i3lock.py"
+
+#######################################################################
+#                           focus bindings                            #
+#######################################################################
+
+bindsym                 $mod+Left focus left
+bindsym                 $mod+Down focus down
+bindsym                 $mod+Up focus up
+bindsym                 $mod+Right focus right
+
+bindsym                 $mod+Shift+Tab workspace prev
+bindsym                 $mod+Tab workspace next
+
+bindsym                 $mod+ampersand workspace 1: 1
+bindsym                 $mod+eacute workspace 2: 2
+bindsym                 $mod+quotedbl workspace 3: 3
+bindsym                 $mod+apostrophe workspace 4: 4
+bindsym                 $mod+parenleft workspace 5: 5
+
+bindsym                 $mod+Shift+ampersand move container to workspace 1: 1
+bindsym                 $mod+Shift+eacute move container to workspace 2: 2
+bindsym                 $mod+Shift+quotedbl move container to workspace 3: 3
+bindsym                 $mod+Shift+apostrophe move container to workspace 4: 4
+bindsym                 $mod+Shift+parenleft move container to workspace 5: 5
+
+#######################################################################
+#                          movement bindings                          #
+#######################################################################
+
+bindsym                 $mod+Shift+Left move left
+bindsym                 $mod+Shift+Down move down
+bindsym                 $mod+Shift+Up move up
+bindsym                 $mod+Shift+Right move right
+
+#######################################################################
+#                           layout bindings                           #
+#######################################################################
+
+bindsym                 $mod+s layout stacking
+bindsym                 $mod+w layout tabbed
+bindsym                 $mod+e layout toggle split
+bindsym                 $mod+f fullscreen
+
+bindsym                 $mod+h split h
+bindsym                 $mod+v split v
+
+bindsym                 $mod+Shift+space floating toggle
+#bindsym                 $mod+s focus mode_toggle
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier       $mod
+
+#bindsym                 $mod+Shift+minus move scratchpad
+#bindsym                 $mod+minus scratchpad show
+
+#######################################################################
+#                                modes                                #
+#######################################################################
+
+mode                    "resize" {
+    bindsym             h resize shrink width $myres px or $myres ppt
+    bindsym             j resize grow height $myres px or $myres ppt
+    bindsym             k resize shrink height $myres px or $myres ppt
+    bindsym             l resize grow width $myres px or $myres ppt
+
+    bindsym             Left resize shrink width $myres px or $myres ppt
+    bindsym             Right resize grow width $myres px or $myres ppt
+    bindsym             Down resize grow height $myres px or $myres ppt
+    bindsym             Up resize shrink height $myres px or $myres ppt
+
+    bindsym             Escape mode "default"
+}
+bindsym                 $mod+r mode "resize"
+
+#######################################################################
+#                               startup                               #
+#######################################################################
+
+exec "redshift -t 6500:3200"
+
+#######################################################################
+#                                 bar                                 #
+#######################################################################
+
+#bar {
+#                position top
+#                status_command ~/.config/conky-i3.sh
+#                strip_workspace_numbers yes
+#                binding_mode_indicator yes
+#
+#                tray_output none
+#
+#                colors {
+#
+#                        background $COLOR0
+#                        statusline $COLOR0
+#                        separator  $COLOR0
+#
+#                        focused_workspace  $COLOR0      $COLOR0        $COLOR15
+#                        active_workspace   $COLOR0      $COLOR0        $COLOR8
+#                        inactive_workspace $COLOR0      $COLOR0        $COLOR8
+#                        urgent_workspace   $COLOR0     $COLOR0         $COLOR12
+#
+#                }
+#}
+
+#######################################################################
+#                         window assignments                          #
+#######################################################################
+
+assign [class="Firefox"]   2: 2
