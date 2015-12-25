@@ -1,0 +1,152 @@
+#https://wiki.archlinux.org/index.php/Installing_Arch_Linux_on_a_USB_key
+
+loadkeys fr #For french keyboard
+
+#Table
+lsblk #See where the wanted key is located
+cfdisk /dev/sdx #Partition table
+500M #Boot and don't forget to flag it as "Bootable"
+Reste #Home & Root 
+#/!\ Don't creat swap partition, it will fucked in the long term your key /!\
+
+#Partitions
+lsblk
+mkfs.ext4 -O "^has_journal" /dev/sdx1 #Boot, the journal is to save the lifetime of your key
+mkfs.ext4 -O "^has_journal" /dev/sdx2 #Home
+mount /dev/sdx2 /mnt
+mkdir /mnt/boot
+mkdir /mnt/home
+mount /dev/sdx1 /mnt/boot
+mount /dev/sdx2 /mnt/home
+
+#Get faster servers
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+sed -i 's/ˆ#Server/Server/' /etc/pacman.d/mirrorlist.backup
+rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+
+pacstrap /mnt base base-devel vim
+genfstab -U -p /mnt >> /mnt/etc/fstab
+blkid or lsblk -f #They are pretty much the same
+cat /mnt/etc/fstab #Check if the UUID are the same as in blkid
+
+#Chroot
+arch-chroot /mnt
+nano /etc/locale.gen -> uncomment fr_FR.UTF-8 #Or whatever your country is
+locale-gen
+echo LANG=fr_FR.UTF-8 > /etc/locale.conf #Same as before
+export LANG=fr_FR.UTF-8 #Again ...
+nano /etc/vconsole.conf : #This is for those who don't have a qwerty keyboard
+     KEYMAP=fr-pc
+ln -s /usr/share/zoneinfo/Europe/Paris > /etc/localtime #cd /usr/share/zoneinfo && ls #if you want to see more
+hwclock --systohc --utc
+echo dude > /etc/hostname #Replace dude by whatever you want (PC name)
+nano /etc/pacman.conf
+-> uncomment : [multilib] & Include...
+
+#Yaourt
+#First way (it's the easy way but not always working)
+-> add :
+     [archlinuxfr]
+     SigLevel = Never
+     Server = http://repo.archlinux.fr/$arch
+pacman -Sy
+pacman -S yaourt
+#Second way
+git clone https://aur.archlinux.org/package-query.git
+cd package-query
+makepkg -si
+cd ..
+git clone https://aur.archlinux.org/yaourt.git
+cd yaourt
+makepkg -si
+
+passwd #Root passwf
+useradd -m -g users -G wheel,storage,power -s /bin/bash gawk #Change gawk by whatever you want (Username)
+passwd gawk #Pass of the created user
+EDITOR=nano visudo
+-> uncomment/add :
+     %wheel ALL=(ALL) ALL
+     Defaults rootpw
+pacman -S bash-completion
+
+nano /etc/mkinitcpio.conf
+  HOOKS=... block autodetect #Write block before autodetect and remove the other one
+mkinitcpio -p linux
+
+#Grub
+pacman -S grub
+grub-install --boot-directory=/boot --recheck --debug --target=i386-pc /dev/sdx
+grub-mkconfig -o /boot/grub/grub.cfg
+exit
+umount -R /mnt
+
+#Wired
+ip link #See internet possible connection
+sudo systemctl enable dhcpcd@enp0s20u1.service #enp0s20u1 is the name of my wired connection
+sudo reboot
+
+#Wifi
+yaourt -S broadcom-wl #Special driver for XPS 13 2015 wifi card (no need for you)
+sudo pacman -S iw dialog wpa_supplicant #To get wifi work
+sudo wifi-menu -o #Connect to wifi network and creat a profile
+cd /etc/netctl #See created profile(s)
+sudo netctl start wlp2s0-* #start & enable profiles (wlp2s0 is the name of my wifi card)
+sudo netctl enable wlp2s0-*
+
+#Needed software for my config
+sudo pacman -S xf86-input-synaptics xf86-video-intel xf86-video-vesa xf86-video-ati xf86-video-nouveau mesa xorg-utils xorg-server xorg-server-utils xorg-xinit xorg-xrandr tlp firefox vlc ranger vim-plugins wget feh fuse-exfat zip unzip nautilus gvfs udiskie udisks2 autofs redshift htop slim python2 termite scrot chromium upower openssh (w3m bc) cabextract gimp
+pacman -Syyu
+yaourt -S archey3 screenfetch rofi i3-gaps-next-git arp-scan compton libeatmydata concalc bdf-tewi-git gohufont
+sudo reboot
+
+#Save some key lifetime
+sudo mkdir /etc/systemd/journal.conf.d
+sudo nano /etc/systemd/journal.conf.d/usbstick.conf:
+     [Journal] 
+     Storage=volatile 
+     RuntimeMaxUse=30M
+cd /boot/grub
+sudo nano menu.lst:
+LABEL Arch 
+     MENU LABEL Arch Linux 
+     LINUX ../vmlinuz-linux 
+     APPEND root=UUID=X ro #Change X for your root partition UUID (blkid or lsblk -f)
+     INITRD ../initramfs-linux.img
+
+#Login manager
+sudo systemctl enable slim.service
+sudo pacman -S archlinux-themes-slim
+sudo nano /etc/slim.conf
+
+#Vim setup
+sudo nano /etc/vimrc
+     set number
+     filetype plugin on
+     syntax on
+
+cd
+git clone Https://github.com/Mattudw/Dotfiles.git
+#And install the config
+
+#Bluetooth
+https://wiki.archlinux.org/index.php/Dell_XPS_13_%282015%29 #Bluetooth driver & for XPS 13 2105
+cabextract 20662520_6c535fbfa9dca0d07ab069e8918896086e2af0a7.cab #For XPS 13 2015
+hex2hcd BCM20702A1_001.002.014.1443.1572.hex #For XPS 13 2015
+mv BCM20702A1_001.002.014.1443.1572.hcd /lib/firmware/brcm/BCM20702A1-0a5c-216f.hcd #For XPS 13 2015
+ln -rs /lib/firmware/brcm/BCM20702A1-0a5c-216f.hcd /lib/firmware/brcm/BCM20702A0-0a5c-216f.hcd #For XPS 13 2015
+sudo pacman bluez-utils bluez
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
+sudo hciconfig hci0 up #Without that bluetoothwtl won't work
+bluetoothctl
+sudo nano /etc/udev/rules.d/10-local.rules: #Start bluetooth everytime
+  #Set bluetooth power up 
+  ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
+
+extension firefox :
+  full fullscreen
+  new tab override
+  ghostery
+  HTTPS everywhere
+  lastpass
+  ublock origin
