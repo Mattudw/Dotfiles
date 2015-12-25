@@ -1,5 +1,9 @@
 #https://wiki.archlinux.org/index.php/Installing_Arch_Linux_on_a_USB_key
 
+#Download iso from archlinux website
+#Download and use : Iso to usb
+#Boot on the key with the iso with the key where will be your Arch setup
+
 loadkeys fr #For french keyboard
 
 #Table
@@ -105,6 +109,8 @@ sudo nano /etc/systemd/journal.conf.d/usbstick.conf:
      [Journal] 
      Storage=volatile 
      RuntimeMaxUse=30M
+     
+#Boot on several machine
 cd /boot/grub
 sudo nano menu.lst:
 LABEL Arch 
