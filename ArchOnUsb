@@ -160,3 +160,8 @@ extension firefox :
 #Wacom
 sudo pacman -S udev
 yaourt -S wacom-udev xf86-input-wacom-git
+
+#Dwarf fortress
+sudo pacman -S dwarffortress
+yaourt -S dwarftherapist-git
+sudo setcap cap_sys_ptrace=eip /usr/bin/dwarftherapist
