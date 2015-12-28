@@ -115,7 +115,7 @@ sudo reboot
 
 #Save some key lifetime
 sudo mkdir /etc/systemd/journal.conf.d
-sudo nano /etc/systemd/journal.conf.d/usbstick.conf:
+sudo nano /etc/systemd/journal.conf.d/usbstick.conf #Empty file
      [Journal] 
      Storage=volatile 
      RuntimeMaxUse=30M
