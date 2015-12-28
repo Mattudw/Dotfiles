@@ -50,11 +50,11 @@ nano /etc/pacman.conf #uncomment : [multilib] & Include...
 
 #Yaourt
 #First way (it's the easy way but not always working)
--> add :
+#Add at the end of /etc/pacman.conf
      [archlinuxfr]
      SigLevel = Never
      Server = http://repo.archlinux.fr/$arch
-pacman -Sy
+pacman -Sy #If you got an error(s) don't worry just go back to your pacman.conf and remove what you just write in and try the second way
 pacman -S yaourt
 #Second way
 git clone https://aur.archlinux.org/package-query.git
