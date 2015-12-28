@@ -134,6 +134,15 @@ sudo nano /etc/vimrc #add this at the end of the file
 cd
 git clone Https://github.com/Mattudw/Dotfiles.git
 #And install the config
+sudo rm -R .bashrc
+mv Dotfiles/* ~/
+mv Dotfiles/.* ~/ #if they ask something write "no"
+mkdir pics
+mkdir downl
+rm -R Dotfiles
+cd pics
+wget http://78.194.40.123/uploads/big/76621f9f3730961f2b630a6d3ef38b62.png
+sudo reboot
 
 #Bluetooth
 #https://wiki.archlinux.org/index.php/Dell_XPS_13_%282015%29 #Bluetooth driver & for XPS 13 2105
