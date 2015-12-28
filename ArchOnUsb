@@ -65,9 +65,9 @@ git clone https://aur.archlinux.org/yaourt.git
 cd yaourt
 makepkg -si
 
-passwd #Root passwf
+passwd #Root password
 useradd -m -g users -G wheel,storage,power -s /bin/bash gawk #Change gawk by whatever you want (Username)
-passwd gawk #Pass of the created user
+passwd gawk #Password of the created user
 EDITOR=nano visudo
 -> uncomment/add :
      %wheel ALL=(ALL) ALL
