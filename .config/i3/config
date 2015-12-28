@@ -63,7 +63,8 @@ bindsym                 $mod+space exec rofi -show run -terminal xterm -font 'Te
 bindsym                 $mod+Return exec termite
 bindsym                 $mod+c exec setxkbmap fr
 bindsym                 $mod+Shift+f exec eatmydata firefox
-bindsym                 $mod+Shift+s exec /home/gawk/.bin/mntr
+bindsym                 $mod+Shift+s exec ~/.bin/mntr
+#bindsym                 $mod+Shift+s exec xrandr --output eDP1 --off --output DP1 --auto
 
 #######################################################################
 #                             i3 bindings                             #
@@ -97,7 +98,7 @@ bindsym                 XF86AudioPlay exec mpc toggle
 #                          display bindings                           #
 #######################################################################
 
-bindsym                 $mod+Delete exec "~/.config/i3lock.py"
+#bindsym                 $mod+Delete exec "~/.config/i3lock.py"
 
 #######################################################################
 #                           focus bindings                            #
@@ -175,6 +176,7 @@ bindsym                 $mod+r mode "resize"
 #                               startup                               #
 #######################################################################
 
+exec ~/.bin/mntr
 exec "redshift -t 6500:3200"
 
 #######################################################################
