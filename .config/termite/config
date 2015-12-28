@@ -1,6 +1,6 @@
 [options]
 clickable_url = true
-font = Tewi 9
+font = Gohufont 9
 
 cursor_shape = block
 
