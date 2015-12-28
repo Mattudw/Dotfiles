@@ -69,9 +69,8 @@ passwd #Root password
 useradd -m -g users -G wheel,storage,power -s /bin/bash gawk #Change gawk by whatever you want (Username)
 passwd gawk #Password of the created user
 EDITOR=nano visudo
--> uncomment/add :
-     %wheel ALL=(ALL) ALL
-     Defaults rootpw
+     %wheel ALL=(ALL) ALL #Uncomment this line
+     Defaults rootpw #and add this one just after
 pacman -S bash-completion
 
 nano /etc/mkinitcpio.conf
