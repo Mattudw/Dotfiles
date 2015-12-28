@@ -37,7 +37,7 @@ cat /mnt/etc/fstab #Check if the UUID are the same as in blkid
 
 #Chroot
 arch-chroot /mnt
-nano /etc/locale.gen -> uncomment fr_FR.UTF-8 #Or whatever your country is
+nano /etc/locale.gen #uncomment fr_FR.UTF-8 #Or whatever your country is
 locale-gen
 echo LANG=fr_FR.UTF-8 > /etc/locale.conf #Same as before
 export LANG=fr_FR.UTF-8 #Again ...
