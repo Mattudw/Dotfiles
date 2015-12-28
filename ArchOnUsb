@@ -25,7 +25,7 @@ mount /dev/sdx1 /mnt/boot
 mount /dev/sdx2 /mnt/home
 
 #Get faster servers
-ping -c 3 www.google.com
+ping -c 3 www.google.com #To see if your connection is up
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 sed -i 's/ˆ#Server/Server/' /etc/pacman.d/mirrorlist.backup
 rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
@@ -46,8 +46,7 @@ nano /etc/vconsole.conf #This is for those who don't have a qwerty keyboard, the
 ln -s /usr/share/zoneinfo/Europe/Paris > /etc/localtime #cd /usr/share/zoneinfo && ls #if you want to see more
 hwclock --systohc --utc
 echo dude > /etc/hostname #Replace dude by whatever you want (PC name)
-nano /etc/pacman.conf
--> uncomment : [multilib] & Include...
+nano /etc/pacman.conf #uncomment : [multilib] & Include...
 
 #Yaourt
 #First way (it's the easy way but not always working)
