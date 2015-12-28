@@ -1,0 +1,23 @@
+#!/bin/bash
+
+hostname=$(hostname)
+username=$(id -un)
+distro="Arch Linux"
+processor="i7 5500U"
+kernel=$(uname -r -s)
+font="Gohu"
+uptime=$(uptime -p)
+wm="i3"
+terminal="Termite"
+
+echo ""
+echo -e '                         ' "\e[34m$username\e[0m@\e[94m$hostname\e[0m"
+echo -e '　 　   __,,,,,,__   '
+echo -e '　　　(:(　　　　 )　    ' "\e[33m$uptime\e[0m"
+echo -e '　　　 |:| ●レ ● |  '
+echo -e '　　　 |:|　 つ  |　     ' "\e[31mDistro:\e[0m $distro"
+echo -e '　　　 |:|　 　  |　     ' "\e[31mKernel:\e[0m $kernel"
+echo -e '        ￣￣￣￣￣       ' "\e[31mFont:\e[0m $font"
+echo -e '                         ' "\e[31mTerminal:\e[0m $terminal"
+echo -e '                         ' "\e[31mWM:\e[0m $wm"
+echo ""
