@@ -136,11 +136,11 @@ git clone Https://github.com/Mattudw/Dotfiles.git
 #And install the config
 
 #Bluetooth
-https://wiki.archlinux.org/index.php/Dell_XPS_13_%282015%29 #Bluetooth driver & for XPS 13 2105
-cabextract 20662520_6c535fbfa9dca0d07ab069e8918896086e2af0a7.cab #For XPS 13 2015
-hex2hcd BCM20702A1_001.002.014.1443.1572.hex #For XPS 13 2015
-mv BCM20702A1_001.002.014.1443.1572.hcd /lib/firmware/brcm/BCM20702A1-0a5c-216f.hcd #For XPS 13 2015
-ln -rs /lib/firmware/brcm/BCM20702A1-0a5c-216f.hcd /lib/firmware/brcm/BCM20702A0-0a5c-216f.hcd #For XPS 13 2015
+#https://wiki.archlinux.org/index.php/Dell_XPS_13_%282015%29 #Bluetooth driver & for XPS 13 2105
+#cabextract 20662520_6c535fbfa9dca0d07ab069e8918896086e2af0a7.cab #For XPS 13 2015
+#hex2hcd BCM20702A1_001.002.014.1443.1572.hex #For XPS 13 2015
+#mv BCM20702A1_001.002.014.1443.1572.hcd /lib/firmware/brcm/BCM20702A1-0a5c-216f.hcd #For XPS 13 2015
+#ln -rs /lib/firmware/brcm/BCM20702A1-0a5c-216f.hcd /lib/firmware/brcm/BCM20702A0-0a5c-216f.hcd #For XPS 13 2015
 sudo pacman bluez-utils bluez
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
