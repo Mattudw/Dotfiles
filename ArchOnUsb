@@ -83,12 +83,12 @@ grub-install --boot-directory=/boot --recheck --debug --target=i386-pc /dev/sdx 
 grub-mkconfig -o /boot/grub/grub.cfg
 #Boot on several machine
 cd /boot/grub
-sudo nano menu.lst:
-LABEL Arch 
-     MENU LABEL Arch Linux 
-     LINUX ../vmlinuz-linux 
-     APPEND root=UUID=X ro #Change X for your root partition UUID (blkid or lsblk -f)
-     INITRD ../initramfs-linux.img
+sudo nano menu.lst #Empty file
+     LABEL Arch 
+          MENU LABEL Arch Linux 
+          LINUX ../vmlinuz-linux 
+          APPEND root=UUID=X ro #Change X for your root partition UUID (blkid or lsblk -f)
+          INITRD ../initramfs-linux.img
 
 exit #Exit chroot
 umount -R /mnt
