@@ -81,8 +81,9 @@ mkinitcpio -p linux
 pacman -S grub
 grub-install --boot-directory=/boot --recheck --debug --target=i386-pc /dev/sdx
 grub-mkconfig -o /boot/grub/grub.cfg
-exit
+exit #Exit chroot
 umount -R /mnt
+sudo reboot
 
 #Wired
 ip link #See internet possible connection
