@@ -167,3 +167,6 @@ yaourt -S dwarftherapist-git
 sudo setcap cap_sys_ptrace=eip /usr/bin/dwarftherapist
 #Texture : http://www.bay12forums.com/smf/index.php?topic=150763.msg6231814#msg6231814
 #Remove aquifer in : inorganic_stone_soil, inorganic_stone_mineral, inorganic_stone_layer (/raw/objects)
+
+#Pi zero OTG
+#https://learn.adafruit.com/turning-your-raspberry-pi-zero-into-a-usb-gadget?view=all
