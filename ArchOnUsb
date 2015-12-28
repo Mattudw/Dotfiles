@@ -1,8 +1,9 @@
 #https://wiki.archlinux.org/index.php/Installing_Arch_Linux_on_a_USB_key
 
 #Download iso from archlinux website
+#Take two keys, we will put the iso on the first and install the whole system on the second one
 #Download and use : Iso to usb
-#Boot on the key with the iso with the key where will be your Arch setup
+#Boot on the first key with the second key plug in
 
 loadkeys fr #For french keyboard
 
@@ -11,7 +12,7 @@ lsblk #See where the wanted key is located
 cfdisk /dev/sdx #Partition table
 500M #Boot and don't forget to flag it as "Bootable"
 Reste #Home & Root 
-#/!\ Don't creat swap partition, it will fucked in the long term your key /!\
+#/!\ Don't creat swap partition, it will cause long-term damage /!\
 
 #Partitions
 lsblk
