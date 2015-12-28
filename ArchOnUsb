@@ -41,8 +41,8 @@ nano /etc/locale.gen #uncomment fr_FR.UTF-8 #Or whatever your country is
 locale-gen
 echo LANG=fr_FR.UTF-8 > /etc/locale.conf #Same as before
 export LANG=fr_FR.UTF-8 #Again ...
-nano /etc/vconsole.conf : #This is for those who don't have a qwerty keyboard
-     KEYMAP=fr-pc
+nano /etc/vconsole.conf #This is for those who don't have a qwerty keyboard, the file will be empty
+     KEYMAP=fr-pc #Write this
 ln -s /usr/share/zoneinfo/Europe/Paris > /etc/localtime #cd /usr/share/zoneinfo && ls #if you want to see more
 hwclock --systohc --utc
 echo dude > /etc/hostname #Replace dude by whatever you want (PC name)
