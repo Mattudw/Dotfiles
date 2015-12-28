@@ -125,8 +125,8 @@ sudo systemctl enable slim.service
 sudo pacman -S archlinux-themes-slim
 sudo nano /etc/slim.conf
 
-#Vim setup
-sudo nano /etc/vimrc
+#Vim setup 
+sudo nano /etc/vimrc #add this at the end of the file
      set number
      filetype plugin on
      syntax on
