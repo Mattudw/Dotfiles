@@ -107,7 +107,7 @@ cd /etc/netctl #See created profile(s)
 sudo netctl start wlp2s0-* #start & enable profiles (wlp2s0 is the name of my wifi card)
 sudo netctl enable wlp2s0-*
 
-#Needed software for my config
+#Software
 sudo pacman -S xf86-input-synaptics xf86-video-intel xf86-video-vesa xf86-video-ati xf86-video-nouveau mesa xorg-utils xorg-server xorg-server-utils xorg-xinit xorg-xrandr firefox vlc ranger vim-plugins wget feh fuse-exfat zip unzip nautilus gvfs udiskie udisks2 autofs redshift htop slim python2 termite scrot chromium upower openssh cabextract gimp inkscape xsel bc
 sudo pacman -Syyu
 yaourt -S archey3 screenfetch rofi i3-gaps-next-git arp-scan compton libeatmydata concalc gohufont utox-git #everytime he ask for editing, write "no"/"n" if not write "yes"/"y"#+ bdf-tewi-git but you may have an error
@@ -150,6 +150,7 @@ sudo nano /etc/udev/rules.d/10-local.rules: #Start bluetooth everytime
   #Set bluetooth power up 
   ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
 
+#Firefox
 extension firefox :
   full fullscreen
   new tab override
