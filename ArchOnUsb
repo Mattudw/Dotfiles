@@ -74,12 +74,12 @@ EDITOR=nano visudo
 pacman -S bash-completion
 
 nano /etc/mkinitcpio.conf
-  HOOKS=... block autodetect #Write block before autodetect and remove the other one
+  HOOKS="base udev autodetect modconf block filesystems keyboard fsck" #Write "block" before "autodetect" and remove the "block", which should gives you : HOOKS="base udev block autodetext modconf filesystems keyboard fsck"
 mkinitcpio -p linux
 
 #Grub
 pacman -S grub
-grub-install --boot-directory=/boot --recheck --debug --target=i386-pc /dev/sdx
+grub-install --boot-directory=/boot --recheck --debug --target=i386-pc /dev/sdx #Change x by the letter of your key
 grub-mkconfig -o /boot/grub/grub.cfg
 exit #Exit chroot
 umount -R /mnt
