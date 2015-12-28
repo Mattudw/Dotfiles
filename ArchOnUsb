@@ -79,7 +79,7 @@ mkinitcpio -p linux
 
 #Grub
 pacman -S grub
-grub-install --boot-directory=/boot --recheck --debug --target=i386-pc /dev/sdx #Change x by the letter of your key
+grub-install --boot-directory=/boot --recheck --debug --target=i386-pc /dev/sdx #Change x by the letter of your key #if it failed try this : grub-install --boot-directory=/boot --recheck --debug --force --target=i386-pc /dev/sdx
 grub-mkconfig -o /boot/grub/grub.cfg
 exit #Exit chroot
 umount -R /mnt
