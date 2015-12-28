@@ -24,6 +24,7 @@ mount /dev/sdx1 /mnt/boot
 mount /dev/sdx2 /mnt/home
 
 #Get faster servers
+ping -c 3 www.google.com
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
 sed -i 's/ˆ#Server/Server/' /etc/pacman.d/mirrorlist.backup
 rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
