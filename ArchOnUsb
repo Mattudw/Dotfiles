@@ -208,3 +208,4 @@ sudo chmod +x /etc/openvpn/update-resolv-conf.sh
 #Add this before <ca> :
      up /etc/openvpn/update-resolv-conf.sh
      down /etc/openvpn/update-resolv-conf.sh
+sudo systemctl start openvpn@vypr-uk
