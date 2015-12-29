@@ -196,3 +196,5 @@ sudo vim /etc/netctl/pizero
 #Openvpn
 inst openvpn
 sudo cp /usr/share/openvpn/examples/client.conf /etc/openvpn/client.conf
+#Download .ovpn
+sudo mv something.ovpn /etc/openvpn/vpn-country.conf
