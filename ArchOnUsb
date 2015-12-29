@@ -198,3 +198,13 @@ inst openvpn
 sudo cp /usr/share/openvpn/examples/client.conf /etc/openvpn/client.conf
 #Download .ovpn
 sudo mv something.ovpn /etc/openvpn/vpn-country.conf
+cd /etc/openvpn
+sudo touch user.txt
+sudo vim user.txt #write you login + passw
+sudo touch update-resolv-conf.sh
+sudo vim update* #and paste this : https://raw.githubusercontent.com/masterkorp/openvpn-update-resolv-conf/master/update-resolv-conf.sh
+sudo chmod +x /etc/openvpn/update-resolv-conf.sh
+#Change vpn .conf from "auth-user-pass" to "auth-user-pass /etc/openvpn/user.txt"
+#Add this before <ca> :
+     up /etc/openvpn/update-resolv-conf.sh
+     down /etc/openvpn/update-resolv-conf.sh
