@@ -15,7 +15,8 @@ body {
 
 main {
   display: block;
-  font-family: Fantasy;
+  /*font-family: 'Roboto';*/
+  font-family: Helvetica;
   left: 50%;
   position: absolute;
   top: 45%;
@@ -27,7 +28,7 @@ h1 {
   color: #9adeea;
   display: block;
   margin: 0 auto;
-  text-align: left;
+  text-align: center;
   width: 400px;
 }
 
