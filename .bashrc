@@ -8,17 +8,19 @@
 alias ls='ls --color=auto'
 #PS1='[\u@\h \W]\$ '
 
-prompt () {
-    _ERR=$?
-    _UID=$(id -u)
-    _JOB=$(jobs | wc -l)
+#prompt () {
+#    _ERR=$?
+#    _UID=$(id -u)
+#    _JOB=$(jobs | wc -l)
+#
+#    [ $_UID -eq 0 ] && echo -n '━' || echo -n -e '─'
+#    [ $_JOB -ne 0 ] && echo -n '!' || echo -n -e '─'
+#    [ $_ERR -ne 0 ] && echo -n '!' || echo -n -e '─'
+#}
+#
+#PS1='$(prompt) '
 
-    [ $_UID -eq 0 ] && echo -n '━' || echo -n -e '─'
-    [ $_JOB -ne 0 ] && echo -n '!' || echo -n -e '─'
-    [ $_ERR -ne 0 ] && echo -n '!' || echo -n -e '─'
-}
-
-PS1='$(prompt) '
+PS1='gawk $(pwd | sed -e "s/\/home\/gawk/~/") $(tput setaf 5)>$(tput sgr0) '
 
 # define a standard background and foreground variable.
 getTermColor() {
