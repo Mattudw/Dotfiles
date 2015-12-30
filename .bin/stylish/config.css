@@ -15,8 +15,8 @@
 
 :root {
     /* TAB VARIABLES */
-    --bg-light: #2e2532; --bg-dark: #191919;
-    --fg-light: #ffffff; --fg-dark: #2e2532;
+    --bg-light: #191919; --bg-dark: #191919;
+    --fg-light: #ffffff; --fg-dark: #675989;
     --tab-triangle-correction: -1px;
     --tab-height: 18px; --tab-icon-size: 10px; --tab-strip-margin: -11px; --tab-overlap: -5px;
     --tab-fonts: "Tewi",monospace,"Tewi"; --tab-font-size: 7pt;
