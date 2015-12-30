@@ -212,5 +212,3 @@ sudo systemctl start openvpn@vypr-uk
 
 #Usb key mount
 mkdir /mnt/usbstick
-sudo vim /etc/fstab
-     UUID=DA3CDC463CDC1EF7 /mnt/usbstick ntfs user,noauto,noatime,flush 0 0 #add this line
