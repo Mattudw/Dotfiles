@@ -161,7 +161,7 @@ sudo nano /etc/udev/rules.d/10-local.rules: #Start bluetooth everytime
 
 #Firefox
 extension firefox :
-  full fullscreen
+  stylish
   new tab override
   ghostery
   HTTPS everywhere
