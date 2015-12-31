@@ -215,6 +215,12 @@ mkdir /mnt/usbstick
 
 #Song
 sudo pacman -S alsa-utils
-sudo nano /etc/modprobe.d/alsa-base.conf
-    options snd_hda_intel id=PCH index=0
-    options snd_hda_intel id=HDMI index=1
+alsamixer
+cd 
+touch .asoundrc
+vim .asoundrc
+     pcm.!default {
+          type hw
+          card 0
+          device 3
+     }
