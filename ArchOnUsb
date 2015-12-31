@@ -213,7 +213,7 @@ sudo systemctl start openvpn@vypr-uk
 #Usb key mount
 mkdir /mnt/usbstick
 
-#Song
+#Sound
 sudo pacman -S alsa-utils
 alsamixer
 cd 
