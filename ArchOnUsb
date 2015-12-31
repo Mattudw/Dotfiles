@@ -219,8 +219,6 @@ alsamixer
 cd 
 touch .asoundrc
 vim .asoundrc
-     pcm.!default {
-          type hw
-          card 0
-          device 3
-     }
+     defaults.pcm.card 0
+     defaults.pcm.device 3
+     defaults.ctl.card 0
