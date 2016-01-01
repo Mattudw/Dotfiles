@@ -210,10 +210,6 @@ sudo chmod +x /etc/openvpn/update-resolv-conf.sh
      down /etc/openvpn/update-resolv-conf.sh
 sudo systemctl start openvpn@vypr-uk
 
-#Vyprvpn
-inst networkmanager networkmanager-openvpn networkmanager-applet
-
-
 #Usb key mount
 mkdir /mnt/usbstick
 
