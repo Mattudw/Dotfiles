@@ -210,15 +210,19 @@ sudo chmod +x /etc/openvpn/update-resolv-conf.sh
      down /etc/openvpn/update-resolv-conf.sh
 sudo systemctl start openvpn@vypr-uk
 
+#Vyprvpn
+inst networkmanager networkmanager-openvpn networkmanager-applet
+
+
 #Usb key mount
 mkdir /mnt/usbstick
 
 #Sound
 sudo pacman -S alsa-utils
 alsamixer
-cd 
-touch .asoundrc
-vim .asoundrc
-     defaults.pcm.card 0
-     defaults.pcm.device 3
-     defaults.ctl.card 0
+cd                            #For me
+touch .asoundrc               #For me  
+vim .asoundrc                 #For me
+     defaults.pcm.card 0      #For me
+     defaults.pcm.device 3    #For me
+     defaults.ctl.card 0      #For me
