@@ -168,6 +168,7 @@ extension firefox :
   HTTPS everywhere
   lastpass
   ublock origin
+  foxyproxy
   customizable Shortcuts
 
 #Wacom
@@ -223,3 +224,14 @@ vim .asoundrc                 #For me
      defaults.pcm.card 0      #For me
      defaults.pcm.device 3    #For me
      defaults.ctl.card 0      #For me
+
+#Tor
+sudo pacman -S tor privoxy
+sudo nano /etc/privoxy/config
+forward-socks5  /  127.0.0.1:9050 . #uncomment this line #line 1336
+sudo systemctl enable privoxy
+sudo systemctl enable tor
+sudo systemctl start privoxy
+sudo systemctl start tor
+# Firefox : In Preferences > Advanced > Network tab > Settings manually set Firefox to use the SOCKS proxy localhost with port 9050. Then you must type about:config into the address bar and void your warranty. Change network.proxy.socks_remote_dns to true and restart the browser. This channels all DNS requests through TOR's socks proxy. 
+# change firefox proxy to : localhost 8118
