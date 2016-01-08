@@ -14,7 +14,7 @@ rsync -a --delete /home/gawk/.bashrc /mnt/usbstick/backup
 rsync -a --delete /home/gawk/.Xresources /mnt/usbstick/backup
 rsync -a --delete /home/gawk/compton.conf /mnt/usbstick/backup
 rsync -a --delete /home/gawk/.asoundrc /mnt/usbstick/backup
-rsync -a --delete /homr/gawk/.xinitrc /mnt/usbstick/backup
+rsync -a --delete /home/gawk/.xinitrc /mnt/usbstick/backup
 rsync -a --delete /home/gawk/.bin/ /mnt/usbstick/backup/.bin
 rsync -a --delete /home/gawk/.config/termite/ /mnt/usbstick/backup/.config/termite
 rsync -a --delete /home/gawk/.config/i3/ /mnt/usbstick/backup/.config/i3
