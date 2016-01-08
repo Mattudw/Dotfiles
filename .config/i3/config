@@ -180,10 +180,8 @@ bindsym                 $mod+r mode "resize"
 
 exec ~/.bin/mntr
 exec "redshift -t 6500:3200"
-exec ~/.bin/mnt
 exec termite
 exec eatmydata firefox
-exec ~/.bin/clck
 
 #######################################################################
 #                                 bar                                 #
@@ -216,4 +214,4 @@ exec ~/.bin/clck
 #######################################################################
 
 assign [class="Firefox"]   2: 2
-#for_window [class="Bar"] floating enabel
+#for_window [class="Bar"] floating enable
