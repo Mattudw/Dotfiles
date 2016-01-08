@@ -238,7 +238,7 @@ sudo systemctl start tor
 
 #Raven
 #A very light Word, it's so new that we can't even find it in AUR repos yet
-#Download : https://github.com/robotlolita/raven/releases/download/v0.2.0-alpha/Raven-linux64.tar.gz
+wget https://github.com/robotlolita/raven/releases/download/v0.2.0-alpha/Raven-linux64.tar.gz
 mkdir .raven
 mkdir ~/docs/ravn #Where files while be stored
 tar -xvf Downloads/Raven-linux64.tar.gz -C ~/.raven
