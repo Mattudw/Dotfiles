@@ -1,0 +1,13 @@
+#!/bin/sh
+# Dylan's Lemonbar Clock
+
+# Source colors
+# source ~/dotfiles/scripts/colors/output/colors.sh
+
+while :; do
+	echo "%{c}$(date "+%a %d %b %l:%M %p")%{c}"
+	sleep 1s
+done |
+
+# lemonbar -d -b -g "150x50+1720+50" -B "#675989"
+lemonbar -d -b -g "150x40+1670+50" -f "-benis-lemon-medium-r-normal--10-110-75-75-m-50-ISO8859-1" -B "#191919" -F "#675989"
