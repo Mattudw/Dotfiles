@@ -1,0 +1,12 @@
+! punk
+
+#define bg    #191919
+#define fg    #f9f9f9
+#define blk   #191919
+#define red   #9adeea
+#define grn   #7489a5
+#define ylw   #675989
+#define blu   #77238e
+#define mag   #9e4770
+#define cyn   #d686ca
+#define wht   #f9f9f9
