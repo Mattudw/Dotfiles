@@ -235,3 +235,11 @@ sudo systemctl start privoxy
 sudo systemctl start tor
 # Firefox : In Preferences > Advanced > Network tab > Settings manually set Firefox to use the SOCKS proxy localhost with port 9050. Then you must type about:config into the address bar and void your warranty. Change network.proxy.socks_remote_dns to true and restart the browser. This channels all DNS requests through TOR's socks proxy. 
 # change firefox proxy to : localhost 8118
+
+#Raven
+#Download : https://github.com/robotlolita/raven/releases/download/v0.2.0-alpha/Raven-linux64.tar.gz
+mkdir .raven
+mkdir ~/docs/ravn #Where files while be stored
+tar -xvf Downloads/Raven-linux64.tar.gz -C ~/.raven
+inst gconf
+cd .raven && ./Raven.sh
