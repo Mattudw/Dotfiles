@@ -1,6 +1,8 @@
 [options]
 clickable_url = true
-font = Tewi 9
+#font = tewi 9
+font = lemon 8
+allow_bold = false
 
 cursor_shape = block
 
@@ -9,11 +11,11 @@ cursor_shape = block
 # special
 foreground = #ffffff
 background = rgba(0, 0, 0, 0)
-#background = #000000
+#background = #191919
 
 # black
 color0 =   #191919
-color8 =   #2e2532
+color8 =   #191919
 # red
 color1  =  #9adeea
 color9  =  #9adeea
@@ -33,5 +35,5 @@ color13 =  #9e4770
 color6 =   #d686ca
 color14 =  #d686ca
 # white
-color7 =   #ffffff
-color15 =  #ffffff
+color7 =   #f9f9f9
+color15 =  #f9f9f9
