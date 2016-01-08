@@ -4,14 +4,14 @@
 
 set $mod         Mod4
 set $myres       10
-set $gsi         25
+set $gsi         10
 set $gso         100
 
 set $bordersize  0
 
-set $COLOR0     #191919
-set $COLOR8     #2e2532
-set $COLOR15    #ffffff
+set $COLOR0     #111111
+set $COLOR8     #191919
+set $COLOR15    #f9f9f9
 
 #######################################################################
 #                           random settings                           #
@@ -53,25 +53,27 @@ new_window              pixel $bordersize
 #######################################################################
 
 bindsym                 Print exec scrot
-bindsym                 $mod+Print exec "scrot -s 'scrot_%m-%d-%Y_%H-%M-%S.png' -q 100 -e 'mv $f ~/Pictures/'; notify-send -u low 'screenshot taken'"
+bindsym                 $mod+Print exec "scrot -s 'scrot_%m-%d-%Y_%H-%M-%S.png' -q 100 -e 'mv $f ~/pics/'
 
 #######################################################################
 #                         launcher & terminal                         #
 #######################################################################
 
-bindsym                 $mod+space exec rofi -show run -terminal xterm -font 'Tewi 11' -lines 3 -eh 2 -width 100 -padding 450 -opacity "95" -bw 0 -bc "$COLOR0" -bg "$COLOR0" -fg "$COLOR8" -hlbg "$COLOR0" -hlfg "$COLOR15"
+bindsym                 $mod+space exec rofi -show run -font "lemon 8" -fg "#675989" -bg "#191919" -hlfg "#f9f9f9" -hlbg "#191919" -bc "#191919" -lines 1 -opacity "99" -width "200" -location 6 -auto-select -terminal termite 
 bindsym                 $mod+Return exec termite
 bindsym                 $mod+c exec setxkbmap fr
 bindsym                 $mod+Shift+f exec eatmydata firefox
 bindsym                 $mod+Shift+s exec ~/.bin/mntr
+bindsym 		$mod+Shift+t exec ~/.bin/clck
+bindsym 		$mod+Shift+r exec ~/.raven/Raven.sh
 #bindsym                 $mod+Shift+s exec xrandr --output eDP1 --off --output DP1 --auto
 
 #######################################################################
 #                             i3 bindings                             #
 #######################################################################
 
-bindsym                 $mod+Shift+c reload
-bindsym                 $mod+Shift+r restart
+#bindsym                 $mod+Shift+c reload
+bindsym                 $mod+Shift+c restart
 bindsym                 $mod+q kill
 
 #######################################################################
@@ -178,6 +180,10 @@ bindsym                 $mod+r mode "resize"
 
 exec ~/.bin/mntr
 exec "redshift -t 6500:3200"
+exec ~/.bin/mnt
+exec termite
+exec eatmydata firefox
+exec ~/.bin/clck
 
 #######################################################################
 #                                 bar                                 #
@@ -210,3 +216,4 @@ exec "redshift -t 6500:3200"
 #######################################################################
 
 assign [class="Firefox"]   2: 2
+#for_window [class="Bar"] floating enabel
