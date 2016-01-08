@@ -12,8 +12,8 @@ clear=$(tput sgr0)
 # colors are now defined with a launch option "-c"
 color=$(tput setaf 1)
 
-# title="$(whoami)@$(hostname)"
-title="Unicorn"
+title="          $(whoami)          "
+# title="Unicorn"
 
 # Custom text to print at the bottom, configurable at launch with "-e"
 #customtext=$(colors2.sh)
@@ -40,13 +40,15 @@ underline=$(printf %"${#title}"s |tr " " "-")
 # Clear terminal before running
 clear
 
+
 echo "${pad}${bold}$title${clear}"
 echo "${pad}$underline"
-echo "${pad}${bold}${color}OS${clear}: $(cat /etc/*ease | awk '/^NAME=/' | cut -d '"' -f2)"
-echo "${pad}${bold}${color}Kernel${clear}: $(uname -r)"
-echo "${pad}${bold}${color}Uptime${clear}: $(uptime -p | sed -e 's/minutes/mins/')"
-echo "${pad}${bold}${color}Packages${clear}: $(pacman -Q | wc -l)"
-echo "${pad}${bold}${color}Shell${clear}: $SHELL"
-echo "${pad}${bold}${color}Window Manager${clear}: i3"
-echo "${pad}${bold}${color}Cpu${clear}: Intel Core i7-5500U CPU @ 3$(lscpu | awk '/CPU MHz:/ {printf "scale=1; "" / 1000 \n"}' | bc -l)GHz"
-echo "${pad}${bold}${color}Ram${clear}: $(free -m | awk '/Mem:/ {printf $3 "MB / " $2 "MB"}')"
+echo "    ${pad}${bold}${color}os${clear} : $(cat /etc/*ease | awk '/^NAME=/' | cut -d '"' -f2)"
+echo "  ${pad}${bold}${color}krnl${clear} : $(uname -r)"
+echo "   ${pad}${bold}${color}upt${clear} : $(uptime -p | sed -e 's/minutes/mins/')"
+echo "  ${pad}${bold}${color}pack${clear} : $(pacman -Q | wc -l)"
+echo "  ${pad}${bold}${color}shel${clear} : $SHELL"
+echo "    ${pad}${bold}${color}wm${clear} : i3"
+echo "   ${pad}${bold}${color}cpu${clear} : i7-5500U CPU 3$(lscpu | awk '/CPU MHz:/ {printf "scale=1; "" / 1000 \n"}' | bc -l)GHz"
+echo "   ${pad}${bold}${color}ram${clear} : $(free -m | awk '/Mem:/ {printf $3 "MB / " $2 "MB"}')"
+echo "  ${pad}${bold}${color}strg${clear} : $(df -h /dev/sdb2 | awk '/dev/ {print $3 " / " $2}')"
