@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo "Syncing pics"
+rsync -a --delete /home/gawk/pics/ /mnt/usbstick/backup/pics
+
+echo "Syncing docs"
+rsync -a --delete /home/gawk/docs/ /mnt/usbstick/backup/docs
+
+echo "Syncing df"
+rsync -a --delete /home/gawk/.dwarffortress/data/save/ /mnt/usbstick/backup/df/save
+
+echo "Syncing config"
+rsync -a --delete /home/gawk/.bashrc /mnt/usbstick/backup
+rsync -a --delete /home/gawk/.Xresources /mnt/usbstick/backup
+rsync -a --delete /home/gawk/compton.conf /mnt/usbstick/backup
+rsync -a --delete /home/gawk/.asoundrc /mnt/usbstick/backup
+rsync -a --delete /home/gawk/.bin/ /mnt/usbstick/backup/.bin
+rsync -a --delete /home/gawk/.config/termite/ /mnt/usbstick/backup/.config/termite
+rsync -a --delete /home/gawk/.config/i3/ /mnt/usbstick/backup/.config/i3
+rsync -a --delete /home/gawk/.config/ranger/ /mnt/usbstick/backup/.config/ranger
+#rsync -a --delete /home/gawk/.config/gtk-3.0/ mnt/usbstick/backup/.config/gtk-3.0
+
+echo "Syncing backup"
+rsync -a --delete /mnt/usbstick/ /home/gawk/bckpkey
+
+#rsync -a --delete --exclude='Naruto Shippuden' --exclude='One Piece' --exclude='yugioh' /home/dyl/Videos/Anime/ /home/dyl/Backup/Videos/Anime
+
+echo "Done!"
