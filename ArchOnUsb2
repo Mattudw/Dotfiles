@@ -83,7 +83,7 @@ grub-install --boot-directory=/boot --recheck --debug --target=i386-pc /dev/sdx 
 grub-mkconfig -o /boot/grub/grub.cfg
 #Boot on several machine
 cd /boot/grub
-sudo nano menu.lst #Empty file
+nano menu.lst #Empty file
      LABEL Arch 
           MENU LABEL Arch Linux 
           LINUX ../vmlinuz-linux 
@@ -92,7 +92,7 @@ sudo nano menu.lst #Empty file
 
 exit #Exit chroot
 umount -R /mnt
-sudo reboot
+reboot
 
 #Wired
 ip link #See internet possible connection
@@ -108,9 +108,9 @@ sudo netctl start wlp2s0-* #start & enable profiles (wlp2s0 is the name of my wi
 sudo netctl enable wlp2s0-*
 
 #Software
-sudo pacman -S xf86-input-synaptics xf86-video-intel xf86-video-vesa xf86-video-ati xf86-video-nouveau mesa xorg-xkill xorg-utils xorg-server xorg-server-utils xorg-xinit xorg-xrandr firefox vlc ranger vim-plugins wget feh fuse-exfat zip unzip nautilus gvfs udiskie udisks2 autofs redshift htop slim python2 termite scrot chromium upower openssh cabextract gimp inkscape xsel rsync ntfs-3g libnotify bc tor privoxy i3lock
+sudo pacman -S xf86-input-synaptics xf86-video-intel xf86-video-vesa xf86-video-ati xf86-video-nouveau mesa xorg-server xorg-server-utils xorg-xinit xorg-xrandr firefox vlc ranger vim-plugins wget feh zip unzip redshift htop slim python2 termite scrot chromium upower openssh cabextract gimp inkscape xsel rsync ntfs-3g libnotify bc#fuse-exfat tor privoxy i3lock nautilus gvfs udiskie udisks2 autofs 
 sudo pacman -Syyu
-yaourt -S archey3 phallus-fonts-git screenfetch rofi i3-gaps-next-git arp-scan compton libeatmydata concalc gohufont utox-git lemonbar-git bdf-tewi-git#everytime he ask for editing, write "no"/"n" if not write "yes"/"y"
+yaourt -S phallus-fonts-git libeatmydata concalc utox-git lemonbar-git dmenu2#everytime he ask for editing, write "no"/"n" if not write "yes"/"y"
 sudo reboot
 
 #Save some key lifetime
