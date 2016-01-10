@@ -160,6 +160,9 @@ sudo nano /etc/udev/rules.d/10-local.rules: #Start bluetooth everytime
   #Set bluetooth power up 
   ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
 
+#GTK 2.0
+GTK2_RC_FILES=/home/gawk/.config/gtk-2.0/gtkrc
+
 #Firefox
 extension firefox :
   stylish
