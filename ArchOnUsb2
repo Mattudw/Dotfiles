@@ -176,8 +176,7 @@ extension firefox :
   HTTPS everywhere
   lastpass
   ublock origin
-  foxyproxy
-  customizable Shortcuts
+  CTR
 
 #Wacom
 sudo pacman -S udev
