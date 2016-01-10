@@ -161,7 +161,12 @@ sudo nano /etc/udev/rules.d/10-local.rules: #Start bluetooth everytime
   ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
 
 #GTK 2.0
-GTK2_RC_FILES=/home/gawk/.config/gtk-2.0/gtkrc
+cd /usr/share/themes
+sudo mkdir themename #Choose a theme name
+cd themename
+sudo mkdir openbox-3
+sudo mkdir gtk-2.0
+GTK2_RC_FILES=/usr/share/themes/yellow/gtk-2.0/gtkrc
 
 #Firefox
 extension firefox :
