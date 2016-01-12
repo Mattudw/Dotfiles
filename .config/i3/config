@@ -4,14 +4,14 @@
 
 set $mod         Mod4
 set $myres       10
-set $gsi         10
-set $gso         100
+set $gsi         0
+set $gso         200
 
 set $bordersize  0
 
-set $COLOR0     #111111
-set $COLOR8     #191919
-set $COLOR15    #f9f9f9
+set $COLOR0     #3e5059
+set $COLOR8     #70838
+set $COLOR15    #f0eae6
 
 #######################################################################
 #                           random settings                           #
@@ -43,8 +43,11 @@ font pango: Tewi 8
 #######################################################################
 
 #hide_edge_borders       none
-#gaps                    inner $gsi
-#gaps                    outer $gso
+gaps                    inner 0
+gaps                    outer 0
+workspace 1 gaps inner $gsi
+workspace 1 gaps outer $gso
+
 new_float               pixel $bordersize
 new_window              pixel $bordersize
 
@@ -53,54 +56,45 @@ new_window              pixel $bordersize
 #######################################################################
 
 bindsym                 Print exec scrot
-bindsym                 $mod+Print exec "scrot -s 'scrot_%m-%d-%Y_%H-%M-%S.png' -q 100 -e 'mv $f ~/pics/'
+bindsym                 $mod+Print exec scrt
 
 #######################################################################
 #                         launcher & terminal                         #
 #######################################################################
 
-bindsym                 $mod+space exec rofi -show run -font "lemon 8" -fg "#675989" -bg "#191919" -hlfg "#f9f9f9" -hlbg "#191919" -bc "#191919" -lines 1 -opacity "99" -width "200" -location 6 -auto-select -terminal termite 
+bindsym                 $mod+space exec dmenu_run -s 0 -nb "#f0eae6" -nf "#3e5059" -sb "#f0eae6" -sf "#70838c" -i -h 20 -w 120 -q -x 20 -y 20 -fn "-benis-lemon-medium-r-normal--10-110-75-75-m-50-ISO8859-1" -p ">" -l 1
 bindsym                 $mod+Return exec termite
-bindsym                 $mod+c exec setxkbmap fr
+bindsym                 $mod+Shift+c exec setxkbmap fr
 bindsym                 $mod+Shift+f exec eatmydata firefox
-bindsym                 $mod+Shift+s exec ~/.bin/mntr
-bindsym 		$mod+Shift+t exec ~/.bin/clck
-bindsym 		$mod+Shift+r exec ~/.raven/Raven.sh
-#bindsym                 $mod+Shift+s exec xrandr --output eDP1 --off --output DP1 --auto
+bindsym 		        $mod+Shift+r exec ~/.raven/Raven.sh
 
 #######################################################################
 #                             i3 bindings                             #
 #######################################################################
 
-#bindsym                 $mod+Shift+c reload
-bindsym                 $mod+Shift+c restart
+bindsym                 $mod+c restart
 bindsym                 $mod+q kill
 
 #######################################################################
 #                            gaps bindings                            #
 #######################################################################
 
-#bindsym                 $mod+n gaps inner all set 0;gaps outer all set 0
+bindsym                 $mod+n gaps inner all set 0;gaps outer all set 0
 bindsym                 $mod+m gaps inner all set $gsi;gaps outer all set $gso
 
 #######################################################################
 #                           audio bindings                            #
 #######################################################################
 
-bindsym                 XF86MonBrightnessUp exec xbacklight +5
-bindsym                 XF86MonBrightnessDown exec xbacklight -5
-bindsym                 XF86AudioRaiseVolume exec "amixer -q sset Master,0 2+ unmute"
-bindsym                 XF86AudioLowerVolume exec "amixer -q sset Master,0 2- unmute"
-bindsym                 XF86AudioMute exec "amixer -q sset Master,0 toggle"
-bindsym                 XF86AudioNext exec mpc next
-bindsym                 XF86AudioPrev exec mpc prev
-bindsym                 XF86AudioPlay exec mpc toggle
+bindsym                 $mod+8 exec "amixer -q sset Master,0 2+ unmute"
+bindsym                 $mod+9 exec "amixer -q sset Master,0 2- unmute"
+bindsym                 $mod+0 exec "amixer -q sset Master,0 toggle"
 
 #######################################################################
 #                          display bindings                           #
 #######################################################################
 
-#bindsym                 $mod+Delete exec "~/.config/i3lock.py"
+#bindsym                 $mod+Delete exec lock
 
 #######################################################################
 #                           focus bindings                            #
@@ -118,13 +112,11 @@ bindsym                 $mod+ampersand workspace 1: 1
 bindsym                 $mod+eacute workspace 2: 2
 bindsym                 $mod+quotedbl workspace 3: 3
 bindsym                 $mod+apostrophe workspace 4: 4
-bindsym                 $mod+parenleft workspace 5: 5
 
-bindsym                 $mod+Shift+ampersand move container to workspace 1: 1
-bindsym                 $mod+Shift+eacute move container to workspace 2: 2
-bindsym                 $mod+Shift+quotedbl move container to workspace 3: 3
-bindsym                 $mod+Shift+apostrophe move container to workspace 4: 4
-bindsym                 $mod+Shift+parenleft move container to workspace 5: 5
+bindsym                 $mod+1 move container to workspace 1: 1
+bindsym                 $mod+2 move container to workspace 2: 2
+bindsym                 $mod+3 move container to workspace 3: 3
+bindsym                 $mod+4 move container to workspace 4: 4
 
 #######################################################################
 #                          movement bindings                          #
@@ -148,8 +140,7 @@ bindsym                 $mod+h split h
 bindsym                 $mod+v split v
 
 bindsym                 $mod+Shift+space floating toggle
-#bindsym                 $mod+s focus mode_toggle
-# Use Mouse+$mod to drag floating windows to their wanted position
+bindsym                 $mod+Shift+s focus mode_toggle
 floating_modifier       $mod
 
 #bindsym                 $mod+Shift+minus move scratchpad
@@ -178,40 +169,15 @@ bindsym                 $mod+r mode "resize"
 #                               startup                               #
 #######################################################################
 
-exec ~/.bin/mntr
+exec ~/Bin/mntr
 exec "redshift -t 6500:3200"
 exec termite
+exec termite
+exec termite
 exec eatmydata firefox
-
-#######################################################################
-#                                 bar                                 #
-#######################################################################
-
-#bar {
-#                position top
-#                status_command ~/.config/conky-i3.sh
-#                strip_workspace_numbers yes
-#                binding_mode_indicator yes
-#
-#                tray_output none
-#
-#                colors {
-#
-#                        background $COLOR0
-#                        statusline $COLOR0
-#                        separator  $COLOR0
-#
-#                        focused_workspace  $COLOR0      $COLOR0        $COLOR15
-#                        active_workspace   $COLOR0      $COLOR0        $COLOR8
-#                        inactive_workspace $COLOR0      $COLOR0        $COLOR8
-#                        urgent_workspace   $COLOR0     $COLOR0         $COLOR12
-#
-#                }
-#}
 
 #######################################################################
 #                         window assignments                          #
 #######################################################################
 
 assign [class="Firefox"]   2: 2
-#for_window [class="Bar"] floating enable
