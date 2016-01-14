@@ -177,6 +177,7 @@ extension firefox :
   lastpass
   ublock origin
   CTR
+# file:///home/gawk/.config/firefox/page/index.html
 
 #Wacom
 sudo pacman -S udev
