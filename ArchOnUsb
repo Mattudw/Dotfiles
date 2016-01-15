@@ -171,7 +171,7 @@ GTK2_RC_FILES=/usr/share/themes/yellow/gtk-2.0/gtkrc
 #Firefox
 extension firefox :
   stylish
-  new tab override
+  custom new tab
   ghostery
   HTTPS everywhere
   lastpass
