@@ -75,7 +75,8 @@ sudo pacman -S xf86-video-intel mesa
 sudo pacman -S xorg-server xorg-server-utils xorg-xinit
 sudo pacman -S alsa-utils
 sudo pacman -S cifs-utils
-sudo pacman -S firefox mpv ranger vim-plugins wget feh zip unzip redshift htop slim python2 termite scrot chromium upower openssh gimp inkscape xsel rsync ntfs-3g fuse-exfat gconf
+sudo pacman -S ruby python2
+sudo pacman -S firefox mpv ranger vim-plugins wget feh zip unzip redshift htop slim termite scrot chromium upower openssh gimp inkscape xsel rsync ntfs-3g fuse-exfat gconf
 yaourt -S i3-gaps-next-git phallus-fonts-git concalc lemonbar-git dmenu2 #everytime he ask for editing, write "no"/"n" if not write "yes"/"y"
 
 #Sound
