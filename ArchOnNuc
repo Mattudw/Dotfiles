@@ -78,6 +78,13 @@ sudo pacman -S cifs-utils
 sudo pacman -S firefox mpv ranger vim-plugins wget feh zip unzip redshift htop slim python2 termite scrot chromium upower openssh gimp inkscape xsel rsync ntfs-3g fuse-exfat gconf
 yaourt -S i3-gaps-next-git phallus-fonts-git concalc lemonbar-git dmenu2 #everytime he ask for editing, write "no"/"n" if not write "yes"/"y"
 
+#Sound
+touch .asoundrc
+nano .asoundrc
+     defaults.pcm.card 0
+     defaults.pcm.device 3
+     defaults.ctl.card 0
+
 #Login manager
 sudo systemctl enable slim.service
 sudo pacman -S archlinux-themes-slim
