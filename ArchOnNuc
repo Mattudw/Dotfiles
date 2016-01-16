@@ -66,29 +66,16 @@ reboot
 
 #Wired
 ip link #See internet possible connection
-sudo systemctl enable dhcpcd@enp0s20u1.service #enp0s20u1 is the name of my wired connection
-sudo reboot
-
-#Wifi
-yaourt -S broadcom-wl #Special driver for XPS 13 2015 wifi card (no need for you)
-sudo pacman -S iw dialog wpa_supplicant #To get wifi work
-sudo wifi-menu -o #Connect to wifi network and creat a profile
-cd /etc/netctl #See created profile(s)
-sudo netctl start wlp2s0-* #start & enable profiles (wlp2s0 is the name of my wifi card)
-sudo netctl enable wlp2s0-*
+sudo systemctl enable dhcpcd@enp3s0.service #enp3s0 is the name of my wired connection
+sudo systemctl start dhcpcd@enp3s0.service
 
 #Software
-sudo pacman -S xf86-input-synaptics xf86-video-intel xf86-video-vesa xf86-video-ati xf86-video-nouveau mesa xorg-server xorg-server-utils xorg-xinit xorg-xrandr firefox vlc ranger vim-plugins wget feh zip unzip redshift htop slim python2 termite scrot chromium upower openssh cabextract gimp inkscape xsel rsync ntfs-3g libnotify bc#fuse-exfat tor privoxy i3lock nautilus gvfs udiskie udisks2 autofs 
-sudo pacman -Syyu
-yaourt -S phallus-fonts-git libeatmydata concalc utox-git lemonbar-git dmenu2 wmutils-git#everytime he ask for editing, write "no"/"n" if not write "yes"/"y"
-sudo reboot
-
-#Save some key lifetime
-sudo mkdir /etc/systemd/journal.conf.d
-sudo nano /etc/systemd/journal.conf.d/usbstick.conf #Empty file
-     [Journal] 
-     Storage=volatile 
-     RuntimeMaxUse=30M
+sudo pacman -Syu #Upgrading whole system
+sudo pacman -S xf86-video-intel mesa 
+sudo pacman -S xorg-server xorg-server-utils xorg-xinit
+sudo pacman -S alsa-utils
+sudo pacman -S firefox vlc ranger vim-plugins wget feh zip unzip redshift htop slim python2 termite scrot chromium upower openssh gimp inkscape xsel rsync ntfs-3g fuse-exfat gconf
+yaourt -S phallus-fonts-git concalc lemonbar-git dmenu2 #everytime he ask for editing, write "no"/"n" if not write "yes"/"y"
 
 #Login manager
 sudo systemctl enable slim.service
@@ -101,7 +88,32 @@ sudo nano /etc/vimrc #add this at the end of the file
      filetype plugin on
      syntax on
 
+#Bluetooth
+sudo pacman bluez bluez-utils
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
+sudo hciconfig hci0 up #Without that bluetoothwtl won't work
+bluetoothctl
+sudo nano /etc/udev/rules.d/10-local.rules: #Start bluetooth everytime
+  #Set bluetooth power up 
+  ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
+
+#Usb key mount
+sudo mkdir /mnt/usbstick
+
+#Sound
+alsamixer
+cd                            #For me
+touch .asoundrc               #For me  
+vim .asoundrc                 #For me
+     defaults.pcm.card 0      #For me
+     defaults.pcm.device 3    #For me
+     defaults.ctl.card 0      #For me
+     
 #Config
+#From a key
+sudo mount -o gid=users,fmask=113,dmask=002 /dev/sdb1 /mnt/usbstick/
+#From the git
 cd
 git clone Https://github.com/Mattudw/Dotfiles.git
 #And install the config
@@ -115,29 +127,6 @@ cd pics
 wget http://78.194.40.123/uploads/big/76621f9f3730961f2b630a6d3ef38b62.png
 sudo reboot
 
-#Bluetooth
-sudo pacman bluez-utils bluez
-#https://wiki.archlinux.org/index.php/Dell_XPS_13_%282015%29 #Bluetooth driver & for XPS 13 2105
-#cabextract 20662520_6c535fbfa9dca0d07ab069e8918896086e2af0a7.cab #For XPS 13 2015
-#hex2hcd BCM20702A1_001.002.014.1443.1572.hex #For XPS 13 2015
-#mv BCM20702A1_001.002.014.1443.1572.hcd /lib/firmware/brcm/BCM20702A1-0a5c-216f.hcd #For XPS 13 2015
-#ln -rs /lib/firmware/brcm/BCM20702A1-0a5c-216f.hcd /lib/firmware/brcm/BCM20702A0-0a5c-216f.hcd #For XPS 13 2015
-sudo systemctl enable bluetooth.service
-sudo systemctl start bluetooth.service
-sudo hciconfig hci0 up #Without that bluetoothwtl won't work
-bluetoothctl
-sudo nano /etc/udev/rules.d/10-local.rules: #Start bluetooth everytime
-  #Set bluetooth power up 
-  ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
-
-#GTK 2.0
-cd /usr/share/themes
-sudo mkdir themename #Choose a theme name
-cd themename
-sudo mkdir openbox-3
-sudo mkdir gtk-2.0
-GTK2_RC_FILES=/usr/share/themes/yellow/gtk-2.0/gtkrc
-
 #Firefox
 extension firefox :
   stylish
@@ -149,9 +138,13 @@ extension firefox :
   CTR
 # file:///home/gawk/.config/firefox/page/index.html
 
-#Wacom
-sudo pacman -S udev
-yaourt -S wacom-udev xf86-input-wacom-git
+#Raven
+#A very light Word, it's so new that we can't even find it in AUR repos yet
+wget https://github.com/robotlolita/raven/releases/download/v0.2.0-alpha/Raven-linux64.tar.gz
+mkdir .raven
+mkdir ~/docs/ravn #Where files while be stored
+tar -xvf Downloads/Raven-linux64.tar.gz -C ~/.raven
+cd .raven && ./Raven.sh
 
 #Dwarf fortress
 sudo pacman -S dwarffortress
@@ -159,66 +152,3 @@ yaourt -S dwarftherapist-git
 sudo setcap cap_sys_ptrace=eip /usr/bin/dwarftherapist
 #Texture : http://www.bay12forums.com/smf/index.php?topic=150763.msg6231814#msg6231814
 #Remove aquifer in : inorganic_stone_soil, inorganic_stone_mineral, inorganic_stone_layer (/raw/objects)
-
-#Pi zero OTG
-#https://learn.adafruit.com/turning-your-raspberry-pi-zero-into-a-usb-gadget?view=all
-sudo touch /etc/netctl/pizero
-sudo vim /etc/netctl/pizero
-     Description='A basic static ethernet connection'
-     Interface=enp0s20u2u2
-     Connection=ethernet
-     IP=static
-     Address=('192.168.7.1/24')
-     #Routes=('192.168.0.0/24 via 192.168.1.2')
-     Gateway='192.168.7.1'
-     DNS=('8.8.4.4' '8.8.8.8')
-
-#Openvpn
-inst openvpn
-sudo cp /usr/share/openvpn/examples/client.conf /etc/openvpn/client.conf
-#Download .ovpn
-sudo mv something.ovpn /etc/openvpn/vpn-country.conf
-cd /etc/openvpn
-sudo touch user.txt
-sudo vim user.txt #write you login + passw
-sudo touch update-resolv-conf.sh
-sudo vim update* #and paste this : https://raw.githubusercontent.com/masterkorp/openvpn-update-resolv-conf/master/update-resolv-conf.sh
-sudo chmod +x /etc/openvpn/update-resolv-conf.sh
-#Change vpn .conf from "auth-user-pass" to "auth-user-pass /etc/openvpn/user.txt"
-#Add this before <ca> :
-     up /etc/openvpn/update-resolv-conf.sh
-     down /etc/openvpn/update-resolv-conf.sh
-sudo systemctl start openvpn@vypr-uk
-
-#Usb key mount
-mkdir /mnt/usbstick
-
-#Sound
-sudo pacman -S alsa-utils
-alsamixer
-cd                            #For me
-touch .asoundrc               #For me  
-vim .asoundrc                 #For me
-     defaults.pcm.card 0      #For me
-     defaults.pcm.device 3    #For me
-     defaults.ctl.card 0      #For me
-
-#Tor
-sudo pacman -S tor privoxy
-sudo nano /etc/privoxy/config
-forward-socks5  /  127.0.0.1:9050 . #uncomment this line #line 1336
-sudo systemctl enable privoxy
-sudo systemctl enable tor
-sudo systemctl start privoxy
-sudo systemctl start tor
-# Firefox : In Preferences > Advanced > Network tab > Settings manually set Firefox to use the SOCKS proxy localhost with port 9050. Then you must type about:config into the address bar and void your warranty. Change network.proxy.socks_remote_dns to true and restart the browser. This channels all DNS requests through TOR's socks proxy. 
-# change firefox proxy to : localhost 8118
-
-#Raven
-#A very light Word, it's so new that we can't even find it in AUR repos yet
-wget https://github.com/robotlolita/raven/releases/download/v0.2.0-alpha/Raven-linux64.tar.gz
-mkdir .raven
-mkdir ~/docs/ravn #Where files while be stored
-tar -xvf Downloads/Raven-linux64.tar.gz -C ~/.raven
-inst gconf
-cd .raven && ./Raven.sh
