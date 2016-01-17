@@ -76,6 +76,7 @@ sudo pacman -S xorg-server xorg-server-utils xorg-xinit #Xorg
 sudo pacman -S alsa-utils #Sound
 sudo pacman -S cifs-utils #Freebox
 sudo pacman -S ruby python2 #Code
+sudo pacman -S mutt #Mail
 sudo pacman -S firefox mpv ranger vim-plugins wget feh zip unzip redshift htop slim termite scrot chromium upower openssh gimp inkscape xsel rsync ntfs-3g fuse-exfat gconf
 yaourt -S i3-gaps-next-git phallus-fonts-git concalc lemonbar-git dmenu2 xprintidle#everytime he ask for editing, write "no"/"n" if not write "yes"/"y"
 
