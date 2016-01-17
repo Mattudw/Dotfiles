@@ -86,11 +86,6 @@ nano .asoundrc
      defaults.pcm.device 3
      defaults.ctl.card 0
 
-#Login manager
-sudo systemctl enable slim.service
-sudo pacman -S archlinux-themes-slim
-sudo nano /etc/slim.conf
-
 #Vim setup 
 sudo nano /etc/vimrc #add this at the end of the file
      set number
@@ -145,6 +140,12 @@ extension firefox :
   ublock origin
   CTR
 # file:///home/gawk/.config/firefox/page/index.html
+
+#Login manager
+sudo systemctl enable slim.service
+sudo nano /etc/slim.conf
+cd /usr/share/slim/themes/
+sudo git clone https://github.com/naglis/slim-minimal.git
 
 #Raven
 #A very light Word, it's so new that we can't even find it in AUR repos yet
