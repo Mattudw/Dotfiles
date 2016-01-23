@@ -1,63 +1,66 @@
-#Install Arch
-#(http://gloriouseggroll.tv/?p=56)
-loadkeys fr #Keyboard in fr
-ping -c 3 www.google.com #Check if internet is ok
-efivar -l #Check if efi mode
-lsblk #Show drivers
-gdisk /dev/sda -> x -> z -> Y -> Y #Partition table
-cgdisk -> /dev/sda
-512MiB -> EF00 -> "Linux Boot"
-4GiB > 8200 -> "Linux Swap"
-All -> 8300 -> "Arch Linux"
-lsblk #Check if partition are ok
-mkfs.fat -F32 /dev/sda1
+#Table
+lsblk #See where the wanted key is located, sdsomething (a, b, c, ...)
+cfdisk /dev/sdx #Partition table
+500M #Boot and don't forget to flag it as "Bootable"
+4G #Swap
+Left #Home & Root 
+
+#Partitions
+lsblk
+mkfs.ext4 /dev/sdx1 #Boot
 mkswap /dev/sda2
 swapon /dev/sda2
-free -m #Check if swap is active
-mkfs.ext4 /dev/sda3
-mount /dev/sda3 /mnt
+mkfs.ext4 /dev/sdx3 #Home
+mount /dev/sdx3 /mnt
 mkdir /mnt/boot
 mkdir /mnt/home
-mount /dev/sda1 /mnt/boot
-mount /dev/sda3 /mnt/home
-cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-sed -i ‘s/^#Server/Server/’ /etc/pacman.d/mirrorlist.backup
-rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
-pacstrap -i /mnt base base-devel vim
+mount /dev/sdx1 /mnt/boot
+mount /dev/sdx2 /mnt/home
+
+pacstrap /mnt base base-devel
 genfstab -U -p /mnt >> /mnt/etc/fstab
-nano /mnt/etc/fstab -> "/dev/sda2 none swap defaults,discard 0 0" #EFI
-arch-chroot /mnt
+
+#Chroot
 nano /etc/locale.gen -> uncomment en_US.UTF-8
 locale-gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
 export LANG=en_US.UTF-8
-ln -s /usr/share/zoneinfo/Europe/Paris > /etc/localtime
+ln -s /usr/share/zoneinfo/Europe/Paris > /etc/localtime #cd /usr/share/zoneinfo && ls #if you want to see more
 hwclock --systohc --utc
-echo dude > /etc/hostname
-nano /etc/pacman.conf
--> uncomment : [multilib] & Include...
--> add :
+echo dude > /etc/hostname #Replace dude by whatever you want (PC name)
+nano /etc/pacman.conf #uncomment : [multilib] & Include...
+
+#Yaourt
+#First way (it's the easy way but not always working)
+#Add at the end of /etc/pacman.conf
      [archlinuxfr]
      SigLevel = Never
      Server = http://repo.archlinux.fr/$arch
-pacman -Sy
-pacman -S yaourt vim bash-completion intel-ucode
-passwd
-useradd -m -g users -G wheel,storage,power -s /bin/bash gawk
-passwd gawk
+pacman -Sy #If you got an error(s) don't worry just go back to your pacman.conf and remove what you just write in and try the second way
+pacman -S yaourt
+#Second way
+git clone https://aur.archlinux.org/package-query.git
+cd package-query
+makepkg -si
+cd ..
+git clone https://aur.archlinux.org/yaourt.git
+cd yaourt
+makepkg -si
+
+passwd #Root password
+useradd -m -g users -G wheel,storage,power -s /bin/bash gawk #Change gawk by whatever you want (Username)
+passwd gawk #Password of the created user
 EDITOR=nano visudo
--> uncomment/add :
-     %wheel ALL=(ALL) ALL
-     Defaults rootpw
-mount -t efivarfs efivarfs /sys/firmware/efi/efivars #Check if efi mounted
-bootctl install
-nano /boot/loader/entries/arch.conf (empty):
-     title Arch Linux
-     linux /vmlinuz-linux
-     initrd /intel-ucode.img #broadwell
-     initrd /initramfs-linux.img
-     options root=/dev/sda3 rw
-exit
+     %wheel ALL=(ALL) ALL #Uncomment this line
+     Defaults rootpw #and add this one just after
+pacman -S bash-completion
+
+#Grub
+pacman -S grub
+grub-install --boot-directory=/boot --recheck --debug --target=i386-pc /dev/sdx #Change x by the letter of your key #if it failed try this : grub-install --boot-directory=/boot --recheck --debug --force --target=i386-pc /dev/sdx
+grub-mkconfig -o /boot/grub/grub.cfg
+
+exit #Exit chroot
 umount -R /mnt
 reboot
 
@@ -68,8 +71,9 @@ sudo systemctl start dhcpcd@enp3s0.service
 
 #Undervolting
 #https://wiki.archlinux.org/index.php/PHC#Intel
+sudo pacman -S linux-headers
 yaourt -S phc-intel
 sudo phc-intel setup
-sudo systemctl enable dkms-phc-intel
 yaourt -S mprime
 #Install phc script
+sudo pacman -S git
