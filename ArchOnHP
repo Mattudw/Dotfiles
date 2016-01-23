@@ -67,6 +67,7 @@ sudo systemctl enable dhcpcd@enp3s0.service #enp3s0 is the name of my wired conn
 sudo systemctl start dhcpcd@enp3s0.service
 
 #Undervolting
+#https://wiki.archlinux.org/index.php/PHC#Intel
 yaourt -S phc-intel
 sudo phc-intel setup
 sudo systemctl enable dkms-phc-intel
