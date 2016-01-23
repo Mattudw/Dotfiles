@@ -77,3 +77,17 @@ sudo phc-intel setup
 yaourt -S mprime
 #Install phc script
 sudo pacman -S git
+
+sudo pacman -S wget
+wget -c https://kernel.org/pub/linux/kernel/v4.x/linux-4.3.3.tar.xz
+tar -xvJf linux-4.3.3.tar.xz
+cd linux-4.3.3
+make mrproper
+zcat /proc/config.gz > .config
+$ make menuconfig
+General setup  ---> Local version - append to kernel release --> Change -ARCH by whatever
+make modules_install
+sudo cp -v arch/x86/boot/bzImage /boot/vmlinuz-YourKernelName
+mkinitcpio -k YourKernelName -c /etc/mkinitcpio.conf -g /boot/initramfs-YourKernelName.img
+sudo cp System.map /boot/System.map-YourKernelName
+sudo ln -sf /boot/System.map-YourKernelName /boot/System.map
