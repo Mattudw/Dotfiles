@@ -91,3 +91,12 @@ sudo cp -v arch/x86/boot/bzImage /boot/vmlinuz-YourKernelName
 mkinitcpio -k YourKernelName -c /etc/mkinitcpio.conf -g /boot/initramfs-YourKernelName.img
 sudo cp System.map /boot/System.map-YourKernelName
 sudo ln -sf /boot/System.map-YourKernelName /boot/System.map
+sudo pacman -S vim
+sudo vim /etc/fstab
+cd /boot/grub
+sudo vim menu.lst #Empty file
+     LABEL Arch 
+          MENU LABEL Arch Linux 
+          LINUX ../vmlinuz-YourKernelName 
+          APPEND root=UUID=X ro #Change X for your root partition UUID (blkid or lsblk -f)
+          INITRD ../initramfs-YourKernelName.img
