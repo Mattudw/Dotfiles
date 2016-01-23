@@ -32,8 +32,6 @@ nano /etc/locale.gen -> uncomment en_US.UTF-8
 locale-gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
 export LANG=en_US.UTF-8
-nano /etc/vconsole.conf :
-     KEYMAP=fr-pc
 ln -s /usr/share/zoneinfo/Europe/Paris > /etc/localtime
 hwclock --systohc --utc
 echo dude > /etc/hostname
