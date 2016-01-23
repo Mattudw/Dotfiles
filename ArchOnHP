@@ -66,6 +66,9 @@ ip link #See internet possible connection
 sudo systemctl enable dhcpcd@enp3s0.service #enp3s0 is the name of my wired connection
 sudo systemctl start dhcpcd@enp3s0.service
 
+#Undervolting
 yaourt -S phc-intel
 sudo phc-intel setup
 sudo systemctl enable dkms-phc-intel
+yaourt -S mprime
+#Install phc script
