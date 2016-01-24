@@ -84,9 +84,17 @@ cd Dotfiles
 chmod +x *
 sudo ./phcScript
 
+sudo pacman -S xorg-server xorg-server-utils xterm xorg-xinit firefox
+
+sudo pacman -S libmariadbclient
 yaourt -S gitlab
 
 yaourt -S ghost
+
+sudo nano /srv/ghost/config.js
+sudo systemctl enable ghost.service
+sudo systemctl start ghost.service
+#Port 2368
 
 sudo pacman -S wget
 wget -c https://kernel.org/pub/linux/kernel/v4.x/linux-4.3.3.tar.xz
