@@ -15,18 +15,12 @@ mount /dev/sdx3 /mnt
 mkdir /mnt/boot
 mkdir /mnt/home
 mount /dev/sdx1 /mnt/boot
-mount /dev/sdx2 /mnt/home
+mount /dev/sdx3 /mnt/home
 
 pacstrap /mnt base base-devel
 genfstab -U -p /mnt >> /mnt/etc/fstab
 
 #Chroot
-nano /etc/locale.gen -> uncomment en_US.UTF-8
-locale-gen
-echo LANG=en_US.UTF-8 > /etc/locale.conf
-export LANG=en_US.UTF-8
-ln -s /usr/share/zoneinfo/Europe/Paris > /etc/localtime #cd /usr/share/zoneinfo && ls #if you want to see more
-hwclock --systohc --utc
 echo dude > /etc/hostname #Replace dude by whatever you want (PC name)
 nano /etc/pacman.conf #uncomment : [multilib] & Include...
 
