@@ -154,6 +154,16 @@ mkdir ~/docs/ravn #Where files while be stored
 tar -xvf Downloads/Raven-linux64.tar.gz -C ~/.raven
 cd .raven && ./Raven.sh
 
+#Laverna
+mkdir .config/laverna
+cd .config/laverna
+wget https://github.com/Laverna/static-laverna/archive/gh-pages.zip -O laverna.zip
+unzip laverna.zip
+cd static*
+mv * ..
+rm -R static*
+rm -R laverna.zip
+
 #Dwarf fortress
 sudo pacman -S dwarffortress
 yaourt -S dwarftherapist-git
