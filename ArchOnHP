@@ -78,6 +78,15 @@ sudo phc-intel setup
 yaourt -S mprime
 #Install phc script
 sudo pacman -S git
+sudo reboot
+git clone https://github.com/Mattudw/Dotfiles.git
+cd Dotfiles
+chmod +x *
+sudo ./phcScript
+
+yaourt -S gitlab
+
+yaourt -S ghost
 
 sudo pacman -S wget
 wget -c https://kernel.org/pub/linux/kernel/v4.x/linux-4.3.3.tar.xz
