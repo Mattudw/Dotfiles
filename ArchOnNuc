@@ -52,7 +52,7 @@ EDITOR=nano visudo
      Defaults rootpw
 mount -t efivarfs efivarfs /sys/firmware/efi/efivars #Check if efi mounted
 bootctl install
-nano /boot/loader/entries/arch.conf (empty):
+nano /boot/loader/entries/arch.conf #Empty file
      title Arch Linux
      linux /vmlinuz-linux
      initrd /intel-ucode.img #broadwell
@@ -146,27 +146,3 @@ sudo nano /etc/slim.conf
 cd /usr/share/slim/themes/
 sudo git clone https://github.com/naglis/slim-minimal.git
 
-#Raven
-#A very light Word, it's so new that we can't even find it in AUR repos yet
-wget https://github.com/robotlolita/raven/releases/download/v0.2.0-alpha/Raven-linux64.tar.gz
-mkdir .raven
-mkdir ~/docs/ravn #Where files while be stored
-tar -xvf Downloads/Raven-linux64.tar.gz -C ~/.raven
-cd .raven && ./Raven.sh
-
-#Laverna
-mkdir .config/laverna
-cd .config/laverna
-wget https://github.com/Laverna/static-laverna/archive/gh-pages.zip -O laverna.zip
-unzip laverna.zip
-cd static*
-mv * ..
-rm -R static*
-rm -R laverna.zip
-
-#Dwarf fortress
-sudo pacman -S dwarffortress
-yaourt -S dwarftherapist-git
-sudo setcap cap_sys_ptrace=eip /usr/bin/dwarftherapist
-#Texture : http://www.bay12forums.com/smf/index.php?topic=150763.msg6231814#msg6231814
-#Remove aquifer in : inorganic_stone_soil, inorganic_stone_mineral, inorganic_stone_layer (/raw/objects)
