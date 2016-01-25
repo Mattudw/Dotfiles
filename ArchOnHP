@@ -84,4 +84,10 @@ cd Dotfiles
 chmod +x *
 sudo ./phcScript
 
-sudo pacman -S xorg-server xorg-server-utils xterm xorg-xinit firefox
+sudo pacman -S docker
+gpasswd -a gawk docker
+newgrp docker
+sudo systemctl enable docker.service
+sudo reboot
+mkdir ghost
+docker run --name some-ghost -d -v /home/gawk/ghost -p 8081:2368 ghost
