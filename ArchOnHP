@@ -84,6 +84,13 @@ cd Dotfiles
 chmod +x *
 sudo ./phcScript
 
+#Ssh
+sudo pacman -S openssh
+sudo systemctl enable sshd.service
+sudo systemctl start sshd.service
+#hostname -i #if you want to know your local ip
+
+#Docker
 sudo pacman -S docker
 gpasswd -a gawk docker
 newgrp docker
