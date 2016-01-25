@@ -85,31 +85,3 @@ chmod +x *
 sudo ./phcScript
 
 sudo pacman -S xorg-server xorg-server-utils xterm xorg-xinit firefox
-
-sudo pacman -S libmariadbclient
-yaourt -S gitlab
-
-yaourt -S ghost
-
-sudo nano /srv/ghost/config.js
-sudo systemctl enable ghost.service
-sudo systemctl start ghost.service
-#Port 2368
-
-sudo pacman -S wget
-wget -c https://kernel.org/pub/linux/kernel/v4.x/linux-4.3.3.tar.xz
-tar -xvJf linux-4.3.3.tar.xz
-cd linux-4.3.3
-make mrproper
-zcat /proc/config.gz > .config
-$ make menuconfig
-General setup  ---> Local version - append to kernel release --> Change -ARCH by whatever
-make modules_install
-sudo cp -v arch/x86/boot/bzImage /boot/vmlinuz-YourKernelName
-mkinitcpio -k YourKernelName -c /etc/mkinitcpio.conf -g /boot/initramfs-YourKernelName.img
-sudo cp System.map /boot/System.map-YourKernelName
-sudo ln -sf /boot/System.map-YourKernelName /boot/System.map
-grub-mkconfig -o /boot/grub/grub.cfg
-#nano grub.cfg and change defaults load to 1
-
-curl https://install.sandstorm.io | bash
