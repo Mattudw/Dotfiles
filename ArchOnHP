@@ -89,5 +89,8 @@ gpasswd -a gawk docker
 newgrp docker
 sudo systemctl enable docker.service
 sudo reboot
+#Ghost
 mkdir ghost
-docker run --name some-ghost -d -v /home/gawk/ghost -p 8081:2368 ghost
+docker run -d --name ghost -v /home/gawk/ghost:/var/lib/ghost -p 8081:2368 ghost
+#Gitlab
+docker run -d --name gitlab -v /home/gawk/gitlab:/ -p 8082:80 sameersbn/gitlab
