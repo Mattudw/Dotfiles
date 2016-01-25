@@ -95,4 +95,4 @@ docker run -d --name ghost -v /home/gawk/ghost:/var/lib/ghost -p 8081:2368 ghost
 #Gitlab
 docker run -d --name gitlab -v /home/gawk/gitlab:/ -p 8082:80 sameersbn/gitlab
 #Paperwork
-docker run -d -v /home/gawk/paperwork:/config -p 8888:80 zuhkov/paperwork
+docker run -d -v /home/gawk/paperwork:/config -p 8883:80 zuhkov/paperwork
