@@ -152,7 +152,8 @@ sudo systemctl enable sshd.service
 sudo systemctl start sshd.service
 #hostname -i #if you want to know your local ip
 
+#Syncthing
 sudo pacman -S syncthing
 #http://docs.syncthing.net/users/autostart.html#using-systemd
-systemctl enable syncthing@gawk.service
-systemctl start syncthing@gawk.service
+sudo systemctl enable syncthing@gawk.service
+sudo systemctl start syncthing@gawk.service
