@@ -104,7 +104,7 @@ sudo systemctl enable docker.service
 sudo reboot
 #Ghost
 mkdir ghost
-docker run -d -v /home/gawk/Sync/srvb/ghost/server:/var/lib/ghost -v /home/gawk/ghost/theme:/var/lib/ghost/content/theme -p 8081:2368 ghost
+docker run -d -v /home/gawk/Sync/srvb/ghost/server:/var/lib/ghost -p 8081:2368 ghost
 #Gitlab
 docker run -d -v /home/gawk/Sync/srvb/gitlab:/ -p 8082:80 sameersbn/gitlab
 #Paperwork
