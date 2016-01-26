@@ -146,3 +146,10 @@ sudo nano /etc/slim.conf
 cd /usr/share/slim/themes/
 sudo git clone https://github.com/naglis/slim-minimal.git
 
+#Ssh
+sudo pacman -S openssh
+sudo systemctl enable sshd.service
+sudo systemctl start sshd.service
+#hostname -i #if you want to know your local ip
+
+sudo pacman -S syncthing
