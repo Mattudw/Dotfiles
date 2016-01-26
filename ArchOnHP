@@ -104,12 +104,12 @@ sudo systemctl enable docker.service
 sudo reboot
 #Ghost
 mkdir ghost
-docker run -d -v /home/gawk/Sync/srvb/ghost/server:/var/lib/ghost -p 8081:2368 ghost
+docker run -d --name some-ghost -v /home/gawk/Sync/srvb/ghost/server:/var/lib/ghost -p 8081:2368 ghost
 #Gitlab
-docker run -d -v /home/gawk/Sync/srvb/gitlab:/ -p 8082:80 sameersbn/gitlab
+docker run -d --name some-gitlab -v /home/gawk/Sync/srvb/gitlab:/ -p 8082:80 sameersbn/gitlab
 #Paperwork
-docker run -d -v /home/gawk/Sync/srvb/paperwork:/config -p 8083:80 zuhkov/paperwork
+docker run -d --name some-paperwork -v /home/gawk/Sync/srvb/paperwork:/config -p 8083:80 zuhkov/paperwork
 #Lychee
-docker run -d  -it -v /home/gawk/Sync/srvb/lychee/uploads/:/uploads/ -v /home/gawk/Sync/srvb/lychee/data/:/data/ -p 8084:80 kdelfour/lychee-docker
+docker run -d --name some-lychee -it -v /home/gawk/Sync/srvb/lychee/uploads/:/uploads/ -v /home/gawk/Sync/srvb/lychee/data/:/data/ -p 8084:80 kdelfour/lychee-docker
 #Rocket.chat
-docker run -d --link db -p 8085:3000 -d rocket.chat
+docker run -d --name some-rocket --link db -p 8085:3000 -d rocket.chat
