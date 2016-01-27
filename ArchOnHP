@@ -112,4 +112,4 @@ docker run -d --name some-paperwork -v /home/gawk/Sync/srvb/paperwork:/config -p
 #Lychee
 docker run -d --name some-lychee -it -v /home/gawk/Sync/srvb/lychee/uploads/:/uploads/ -v /home/gawk/Sync/srvb/lychee/data/:/data/ -p 8084:80 kdelfour/lychee-docker
 #Rocket.chat
-docker run -d --name some-rocket --link db -p 8085:3000 -d rocket.chat
+docker run -d --name some-rocket --link db -p 8085:3000 rocket.chat
