@@ -121,7 +121,7 @@ docker run -d --name some-rocket --link some-mongo -p 8085:3000 rocket.chat
 docker run -d --name some-ttrssdb nornagon/postgres
 docker run -d --name some-ttrss --link some-ttrssdb:db -p 8086:80 x86dev/docker-ttrss
 #Ogar
-docker run -d --name some-ogar -p 8087:443 galexrt/ogar
+docker run -d --name some-ogar -p 8087:443 -p 8187:80 -v /home/gawk/Sync/srvb/ogar:/config lsiodev/ogar
 #Wordpress
 docker run -d --name some-mysql -e MYSQL_ROOT_PASSWORD=PASSWORD mysql:latest
 docker run -d --name some-wordpress -v /home/gawk/Sync/srvb/wordpress:/var/www/html --link some-mysql:mysql -p 8088:80 -d wordpress
