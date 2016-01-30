@@ -107,7 +107,7 @@ docker run -d --name some-ghost -v /home/gawk/Sync/srvb/ghost/server:/var/lib/gh
 #Gitlab
 #https://hub.docker.com/r/sameersbn/gitlab/
 #OpenNote
-sudo docker run -d -p 8083:80 -p 8183:443 foxusa/opennote
+docker run -d --name open-note -p 8083:80 -p 8183:443 foxusa/opennote
 #docker run -d --name some-paperwork -v /home/gawk/Sync/srvb/paperwork:/config -p 8083:80 zuhkov/paperwork
 #Lychee
 docker run -d --name some-lychee -it -v /home/gawk/Sync/srvb/lychee/uploads/:/uploads/ -v /home/gawk/Sync/srvb/lychee/data:/data/ -p 8084:80 kdelfour/lychee-docker
