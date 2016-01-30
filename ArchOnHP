@@ -115,8 +115,8 @@ cd /home/gawk/Sync/srvb/lychee
 sudo chmod 777 uploads
 sudo chmod 777 data
 #Rocket.chat
-docker run -d --name some-mongo mongo --smallfiles
-docker run -d --name some-rocket --link some-mongo -p 8085:3000 rocket.chat
+docker run -d --name db mongo --smallfiles
+docker run -d --name some-rocket --link db -p 8085:3000 rocket.chat
 #RSS
 docker run -d --name some-ttrssdb nornagon/postgres
 docker run -d --name some-ttrss --link some-ttrssdb:db -p 8086:80 x86dev/docker-ttrss
