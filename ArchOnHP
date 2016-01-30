@@ -119,6 +119,8 @@ docker run -d --name some-mongo mongo --smallfiles
 docker run -d --name some-rocket --link some-mongo -p 8085:3000 rocket.chat
 #RSS
 docker run -d --name some-selfoss -p 8086:80 -v /home/gawk/Sync/srvb/selfoss:/var/www/html/data jenserat/selfoss
+mkdir sqlitee
+sudo chmod 777 sqlite
 #docker run -d --name=ttrssdb -e DB_USER=ttrss -e DB_PASS=ttrss -e DB_NAME=ttrss sameersbn/mysql:latest
 #docker run -d --name some-ttrss --link ttrssdb:db -p 8086:80 clue/ttrss
 #Ogar
