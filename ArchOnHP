@@ -110,7 +110,7 @@ docker run -d --name some-gitlab -v /home/gawk/Sync/srvb/gitlab:/ -p 8082:80 sam
 #Paperwork
 docker run -d --name some-paperwork -v /home/gawk/Sync/srvb/paperwork:/config -p 8083:80 zuhkov/paperwork
 #Lychee
-docker run -d --name some-lychee -it -v /home/gawk/Sync/srvb/lychee/uploads/:/uploads/ -v /home/gawk/Sync/srvb/lychee/data/:/data/ -p 8084:80 kdelfour/lychee-docker
+docker run -d --name some-lychee -it -v /home/gawk/Sync/srvb/lychee/uploads/:/uploads/ -v /home/gawk/Sync/srvb/lychee/data:/data/ -p 8084:80 kdelfour/lychee-docker
 #Rocket.chat
 docker run -d --name some-rocket --link db -p 8085:3000 rocket.chat
 #RSS
@@ -118,4 +118,4 @@ docker run -d --name some-ttrss --link ttrssdb:db -p 8086:80 clue/ttrss
 #Ogar
 docker run -d --name some-ogar -p 8087:443 docker pull galexrt/ogar
 #Wordpress
-docker run -d --name some-wordpress --link some-mysql:mysql -p 8088:80 -d wordpress
+docker run -d --name some-wordpress -v /home/gawk/Sync/srvb/wordpress:/var/www/html --link some-mysql:mysql -p 8088:80 -d wordpress
