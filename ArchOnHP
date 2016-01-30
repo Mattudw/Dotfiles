@@ -110,6 +110,7 @@ docker run -d --name some-ghost -v /home/gawk/Sync/srvb/ghost/server:/var/lib/gh
 docker run -d --name some-paperwork -v /home/gawk/Sync/srvb/paperwork:/config -p 8083:80 zuhkov/paperwork
 #Lychee
 docker run -d --name some-lychee -it -v /home/gawk/Sync/srvb/lychee/uploads/:/uploads/ -v /home/gawk/Sync/srvb/lychee/data:/data/ -p 8084:80 kdelfour/lychee-docker
+#Database username and password : lychee
 cd /home/gawk/Sync/srvb/lychee
 sudo chmod 777 uploads
 sudo chmod 777 data
