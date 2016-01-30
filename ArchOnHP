@@ -1,5 +1,5 @@
 #Table
-lsblk #See where the wanted key is located, sdsomething (a, b, c, ...)
+lsblk #See where the hard drive is located, sdsomething (a, b, c, ...)
 cfdisk /dev/sdx #Partition table
 500M #Boot and don't forget to flag it as "Bootable"
 4G #Swap
