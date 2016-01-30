@@ -119,7 +119,7 @@ docker run -d --name some-mongo mongo --smallfiles
 docker run -d --name some-rocket --link some-mongo -p 8085:3000 rocket.chat
 #RSS
 docker run -d --name some-ttrssdb nornagon/postgres
-docker run -d --name some-ttrss --link some-ttrssdb:db -p 8086:80 clue/ttrss
+docker run -d --name some-ttrss --link some-ttrssdb:db -p 8086:80 x86dev/docker-ttrss
 #Ogar
 docker run -d --name some-ogar -p 8087:443 galexrt/ogar
 #Wordpress
