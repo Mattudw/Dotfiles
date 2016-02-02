@@ -126,3 +126,10 @@ docker run -d --name some-ogar -p 8087:443 -p 8187:80 -v /home/gawk/Sync/srvb/og
 #Wordpress
 docker run -d --name some-mysql -e MYSQL_ROOT_PASSWORD=PASSWORD mysql:latest
 docker run -d --name some-wordpress -v /home/gawk/Sync/srvb/wordpress:/var/www/html --link some-mysql:mysql -p 8088:80 -d wordpress
+#Rattic
+docker run -d --name some-ratticdb-postgresql postgres:9.4
+docker run -d --name some-ratticdb-uwsgi --link some-ratticdb-postgresql:postgres -e 'TIMEZONE=UTC' -e 'VIRTUAL_HOST=somedomain.example.com' \
+  -e 'SECRETKEY=someverysecretkeyforsessions' -e 'EMAIL_HOST=smtp.example.com' -e 'EMAIL_PORT=587' -e 'EMAIL_USER=example@example.com' \
+  -e 'EMAIL_PASSWORD=someemailpassword' -e 'EMAIL_FROM=emailed-from@example.com' groventure/ratticdb-uwsgi:1.3
+docker run -d --name ratticdb-nginx -p 8089:80 -e 'PROXY_MODE=on' -e 'VIRTUAL_HOST=somedomain.example.com' -e 'CERT_NAME=default' \
+  --link some-ratticdb-uwsgi:uwsgi --volumes-from ratticdb-uwsgi groventure/ratticdb-nginx:1.9
