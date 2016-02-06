@@ -105,7 +105,8 @@ sudo reboot
 #Ghost
 docker run -d --name some-ghost -v /home/gawk/Sync/srvb/ghost/server:/var/lib/ghost -p 8081:2368 ghost
 #Gogs
-docker run -d --name some-gogs -p 8182:22 -p 8082:3000 -v /home/gawk/Sync/srvb/gogs:/data gogs/gogs
+docker run -d --name some-gogs-mysql -e MYSQL_DATABASE=gogs -e MYSQL_ROOT_PASSWORD=PASSWORD mysql
+docker run -d --name some-gogs --link some-gogs-mysql:mysql -p 8182:22 -p 8082:3000 -v /home/gawk/Sync/srvb/gogs:/data gogs/gogs
 #OpenNote
 docker run -d --name open-note -p 8083:80 -p 8183:443 foxusa/opennote
 #docker run -d --name some-paperwork -v /home/gawk/Sync/srvb/paperwork:/config -p 8083:80 zuhkov/paperwork
