@@ -42,7 +42,7 @@ nano /etc/pacman.conf
      SigLevel = Never
      Server = http://repo.archlinux.fr/$arch
 pacman -Sy
-pacman -S yaourt vim bash-completion intel-ucode
+pacman -S yaourt bash-completion intel-ucode
 passwd
 useradd -m -g users -G wheel,storage,power -s /bin/bash gawk
 passwd gawk
@@ -69,6 +69,7 @@ sudo systemctl start dhcpcd@enp3s0.service
 
 #Software
 sudo pacman -Syu #Upgrading whole system
+sudo pacman -S nvim
 sudo pacman -S xf86-video-intel mesa #Video dirvers
 sudo pacman -S xorg-server xorg-server-utils xorg-xinit #Xorg
 sudo pacman -S alsa-utils #Sound
@@ -77,7 +78,8 @@ sudo pacman -S ruby python2 #Code
 sudo pacman -S mutt #Mail
 sudo pacman -S android-tools
 sudo pacman -S firefox mpv ranger vim-plugins wget feh zip unzip redshift htop slim termite scrot chromium upower openssh gimp inkscape xsel rsync ntfs-3g fuse-exfat gconf
-yaourt -S i3-gaps-next-git phallus-fonts-git concalc lemonbar-git dmenu2 xprintidle#everytime he ask for editing, write "no"/"n" if not write "yes"/"y"
+yaourt -S i3-gaps-next-git phallus-fonts-git concalc lemonbar-git dmenu2 #xprintidle
+yaourt -S keeweb-desktop
 
 #Sound
 touch .asoundrc
@@ -91,6 +93,14 @@ sudo nano /etc/vimrc #add this at the end of the file
      set number
      filetype plugin on
      syntax on
+#Vim-plug
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+#Goyo vim/Limelight
+vim .vimrc
+     Plug 'junegunn/goyo.vim'
+     Plug 'junegunn/limelight.vim'
+:PlugInstall #inside vim software
+
 
 #Bluetooth
 sudo pacman bluez bluez-utils
