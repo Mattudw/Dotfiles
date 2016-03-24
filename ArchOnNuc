@@ -69,7 +69,7 @@ sudo systemctl start dhcpcd@enp3s0.service
 
 #Software
 sudo pacman -Syu #Upgrading whole system
-sudo pacman -S nvim
+sudo pacman -S neovim python2-neovim python-neovim python-pip python2-pip
 sudo pacman -S xf86-video-intel mesa #Video dirvers
 sudo pacman -S xorg-server xorg-server-utils xorg-xinit #Xorg
 sudo pacman -S alsa-utils #Sound
@@ -88,17 +88,24 @@ nano .asoundrc
      defaults.pcm.device 3
      defaults.ctl.card 0
 
-#Vim setup 
-sudo nano /etc/vimrc #add this at the end of the file
+#Vim setup
+#Vim-plug
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+cd .config
+mkdir nvim
+cd nvim
+touch init.vim
+nvim init.vim #add this at the end of the file
+     runtime! archlinux.vim
+     
      set number
      filetype plugin on
      syntax on
-#Vim-plug
-curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-#Goyo vim/Limelight
-vim .vimrc
+     
+     call plug#begin()
      Plug 'junegunn/goyo.vim'
      Plug 'junegunn/limelight.vim'
+     call plug#end()
 :PlugInstall #inside vim software
 
 
