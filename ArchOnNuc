@@ -77,9 +77,11 @@ sudo pacman -S cifs-utils #Freebox
 sudo pacman -S ruby python2 #Code
 sudo pacman -S mutt #Mail
 sudo pacman -S android-tools
+sudo pacman -S compton
 sudo pacman -S firefox mpv ranger vim-plugins wget feh zip unzip redshift htop slim termite scrot chromium upower openssh gimp inkscape xsel rsync ntfs-3g fuse-exfat gconf
 yaourt -S i3-gaps-next-git phallus-fonts-git concalc lemonbar-git dmenu2 #xprintidle
 yaourt -S keeweb-desktop
+yaourt -S hsetroot
 
 #Sound
 touch .asoundrc
