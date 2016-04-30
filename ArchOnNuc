@@ -82,13 +82,6 @@ yaourt -S phallus-fonts-git concalc lemonbar-git dmenu2 #xprintidle
 yaourt -S keeweb-desktop
 yaourt -S hsetroot
 
-#Sound
-touch .asoundrc
-nano .asoundrc
-     defaults.pcm.card 0
-     defaults.pcm.device 3
-     defaults.ctl.card 0
-
 #Vim setup
 #Vim-plug
 curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -119,34 +112,6 @@ bluetoothctl
 sudo nano /etc/udev/rules.d/10-local.rules: #Start bluetooth everytime
   #Set bluetooth power up 
   ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
-
-#Usb key mount
-sudo mkdir /mnt/usbstick
-
-#Sound
-alsamixer
-touch .asoundrc       
-vim .asoundrc    
-     defaults.pcm.card 0
-     defaults.pcm.device 3
-     defaults.ctl.card 0 
-     
-#Config
-#From a key
-sudo mount -o gid=users,fmask=113,dmask=002 /dev/sdb1 /mnt/usbstick/
-#From the git
-cd
-git clone Https://github.com/Mattudw/Dotfiles.git
-#And install the config
-sudo rm -R .bashrc
-mv Dotfiles/* ~/
-mv Dotfiles/.* ~/ #if they ask something write "no"
-mkdir pics
-mkdir downl
-rm -R Dotfiles
-cd pics
-wget http://78.194.40.123/uploads/big/76621f9f3730961f2b630a6d3ef38b62.png
-sudo reboot
 
 #Firefox
 extension firefox :
