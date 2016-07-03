@@ -63,7 +63,7 @@ pacstrap -i /mnt base base-devel
 #Generate the fstab file
 genfstab -U -p /mnt >> /mnt/etc/fstab
 nano /mnt/etc/fstab
-Change this line "/dev/sda2 none swap defaults,discard 0 0"
+#Change this line "/dev/sda2 none swap defaults,discard 0 0"
 
 #Chroot
 arch-chroot /mnt /bin/bash
@@ -156,7 +156,21 @@ sudo pacman -S mutt
 sudo pacman -S android-tools
 #Transparency
 sudo pacman -S compton
-sudo pacman -S firefox mpv ranger wget feh zip unzip redshift htop slim scrot openssh gimp rsync ntfs-3g #gconf upower 
+#Firefox
+sudo pacman -S firefox 
+mpv 
+ranger 
+wget 
+feh 
+zip unzip 
+redshift 
+htop 
+slim 
+scrot 
+openssh 
+gimp 
+rsync 
+ntfs-3g 
 yaourt -S phallus-fonts-git concalc lemonbar-git dmenu2 #xprintidle
 yaourt -S hsetroot
 
