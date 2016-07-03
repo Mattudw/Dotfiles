@@ -1,85 +1,163 @@
-#Install Arch
-#(http://gloriouseggroll.tv/?p=56)
+#############################################
+# How to install Arch Linux on an Intel Nuc #
+#############################################
 
-ping -c 3 www.google.com #Check if internet is ok
-efivar -l #Check if efi mode
-lsblk #Show drivers
-gdisk /dev/sda -> x -> z -> Y -> Y #Partition table
-cgdisk -> /dev/sda
-Enter -> 512MiB -> EF00 -> "Linux Boot"
-Enter -> 4GiB > 8200 -> "Linux Swap"
-Enter -> Enter -> Enter -> "Arch Linux"
-lsblk #Check if partition are ok
+#Check the internet connection, must be wired
+ping -c 3 www.google.com
+#Check if you are in efi mode
+efivar -l
+
+#Preparation of the hard drive
+
+#Identify the devices
+lsblk
+#We consider that we will install Arch on "sda"
+#Partition table
+gdisk /dev/sda
+#Then press : x, x, z, Y, Y
+
+#Partitions
+cgdisk
+/dev/sda
+#Press "Enter" at new partition
+512MiB
+EF00
+"Linux Boot"
+#Press "Enter" at new partition
+4GiB
+8200
+"Linux Swap"
+#Press "Enter" at new partition
+#Press : Enter
+#Press : Enter
+"Arch Linux"
+
+#Format
+#First, we have to check if everything is fine
+lsblk
+#Boot
 mkfs.fat -F32 /dev/sda1
+#Swap
 mkswap /dev/sda2
 swapon /dev/sda2
-free -m #Check if swap is active
+#Check if swap is active
+free -m
+#Home
 mkfs.ext4 /dev/sda3
+
+#Mount
 mount /dev/sda3 /mnt
 mkdir /mnt/boot
 mkdir /mnt/home
 mount /dev/sda1 /mnt/boot
 mount /dev/sda3 /mnt/home
+
+#Mirrorlist
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
+sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
+rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
+
+#Base package
 pacstrap -i /mnt base base-devel
+
+#Generate the fstab file
 genfstab -U -p /mnt >> /mnt/etc/fstab
-nano /mnt/etc/fstab -> "/dev/sda2 none swap defaults,discard 0 0" #EFI
-arch-chroot /mnt
-nano /etc/locale.gen -> uncomment en_US.UTF-8
+nano /mnt/etc/fstab
+Change this line "/dev/sda2 none swap defaults,discard 0 0"
+
+#Chroot
+arch-chroot /mnt /bin/bash
+#Locale
+nano /etc/locale.gen
+#Uncomment en_US.UTF-8
 locale-gen
 echo LANG=en_US.UTF-8 > /etc/locale.conf
-export LANG=en_US.UTF-8
+
+#Time
 ln -s /usr/share/zoneinfo/Europe/Paris > /etc/localtime
 hwclock --systohc --utc
+
+#Hostname
 echo dude > /etc/hostname
+
+#Pacman and Yaourt
 nano /etc/pacman.conf
--> uncomment : [multilib] & Include...
--> add :
-     [archlinuxfr]
-     SigLevel = Never
-     Server = http://repo.archlinux.fr/$arch
+#Uncomment : [multilib] and the line after it
+#Add at the end
+    [archlinuxfr]
+    SigLevel = Never
+    Server = http://repo.archlinux.fr/$arch
+#Update pacman
 pacman -Sy
+#Install Yaourt (AUR)
+pacman -S yaourt
+#Install Intel image
+pacman -S intel-ucode
+#Install bash completion
+pacman -S bash-completion
+
+#Root password
 passwd
+
+#Creation of a new user
 useradd -m -g users -G wheel,storage,power -s /bin/bash gawk
 passwd gawk
+
 EDITOR=nano visudo
--> uncomment/add :
-     %wheel ALL=(ALL) ALL
-     Defaults rootpw
-mount -t efivarfs efivarfs /sys/firmware/efi/efivars #Check if efi mounted
+#Uncomment and add
+    %wheel ALL=(ALL) ALL
+    Defaults rootpw
+
+#Boot loader
 bootctl install
-nano /boot/loader/entries/arch.conf #Empty file
-     title Arch Linux
-     linux /vmlinuz-linux
-     initrd /intel-ucode.img #broadwell
-     initrd /initramfs-linux.img
-     options root=/dev/sda3 rw
+#Creat arch.conf
+nano /boot/loader/entries/arch.conf
+#Add
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /intel-ucode.img
+    initrd /initramfs-linux.img
+    options root=/dev/sda3 rw
+
+#Quit
 exit
 umount -R /mnt
 reboot
 
 #Wired
-ip link #See internet possible connection
-sudo systemctl enable dhcpcd@enp3s0.service #enp3s0 is the name of my wired connection
+#Check internet connection
+ip link
+#We want the wired one here : enp3s0
+sudo systemctl enable dhcpcd@enp3s0.service
 sudo systemctl start dhcpcd@enp3s0.service
 
-#Softwares
-udo pacman -Syu #Upgrading whole system
-sudo pacman -S yaourt #AUR
-sudo pacman -S intel-ucode #Intel img
-sudo pacman -S udiskie #Auto mount
-sudo pacman -S python python2 python-pip python2-pip #Python
-sudo pacman -S neovim python2-neovim python-neovim #Vim
-sudo pacman -S xf86-video-intel mesa #Video dirvers
-sudo pacman -S xorg-server xorg-server-utils xorg-xinit #Xorg
-sudo pacman -S rxvt-unicode #Terminal
-sudo pacman -S alsa-utils #Sound
-sudo pacman -S cifs-utils #Freebox
-sudo pacman -S mutt #Mail
+#Software
+#Upgrade everything
+sudo pacman -Syu
+#Video dirvers
+sudo pacman -S xf86-video-intel mesa
+#Xorg
+sudo pacman -S xorg-server xorg-server-utils xorg-xinit 
+#Terminal
+sudo pacman -S termite
+#Neovim
+sudo pacman -S neovim python2-neovim python-neovim
+#Sound
+sudo pacman -S alsa-utils 
+#Automount
+sudo pacman -S udiskie
+#Python
+sudo pacman -S python python2 python-pip python2-pip
+#Freebox
+sudo pacman -S cifs-utils 
+#Mail
+sudo pacman -S mutt
+#Android tools
 sudo pacman -S android-tools
+#Transparency
 sudo pacman -S compton
 sudo pacman -S firefox mpv ranger wget feh zip unzip redshift htop slim scrot openssh gimp rsync ntfs-3g #gconf upower 
 yaourt -S phallus-fonts-git concalc lemonbar-git dmenu2 #xprintidle
-yaourt -S keeweb-desktop
 yaourt -S hsetroot
 
 #Vim setup
