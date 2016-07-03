@@ -8,7 +8,6 @@ ping -c 3 www.google.com
 efivar -l
 
 #Preparation of the hard drive
-
 #Identify the devices
 lsblk
 #We consider that we will install Arch on "sda"
@@ -158,21 +157,44 @@ sudo pacman -S android-tools
 sudo pacman -S compton
 #Firefox
 sudo pacman -S firefox 
-mpv 
-ranger 
-wget 
-feh 
-zip unzip 
-redshift 
-htop 
-slim 
-scrot 
-openssh 
-gimp 
-rsync 
-ntfs-3g 
-yaourt -S phallus-fonts-git concalc lemonbar-git dmenu2 #xprintidle
+#CLI Vlc
+sudo pacman -S mpv 
+#CLI file manager
+sudo pacman -S ranger 
+#CLI download
+sudo pacman -S wget
+#Image viewer
+sudo pacman -S feh 
+#Zip
+sudo pacman -S zip unzip 
+#F.lux
+sudo pacman -S redshift
+#Process viewer
+sudo pacman -S htop
+#Login manager
+sudo pacman -S slim
+#Print screen
+sudo pacman -S scrot 
+#Ssh
+sudo pacman -S openssh 
+#Gimp
+sudo pacman -S gimp 
+#Sync files
+sudo pacman -S rsync
+#Ntfs support
+sudo pacman -S ntfs-3g 
+#Lemon font
+yaourt -S phallus-fonts-git 
+#Calculator
+yaourt -S concalc 
+#Lemonbar
+yaourt -S lemonbar-git 
+#Dmenu
+yaourt -S dmenu2
+#Solid color wallpaper
 yaourt -S hsetroot
+#Keypass
+yaourt -S keeweb-desktop
 
 #Vim setup
 #Vim-plug
@@ -181,19 +203,20 @@ cd .config
 mkdir nvim
 cd nvim
 touch init.vim
-nvim init.vim #add this at the end of the file
-     runtime! archlinux.vim
-     
-     set number
-     filetype plugin on
-     syntax on
-     
-     call plug#begin()
-     Plug 'junegunn/goyo.vim'
-     Plug 'junegunn/limelight.vim'
-     call plug#end()
-:PlugInstall #inside vim software
+nano init.vim 
+#Add this at the end of the file
+    runtime! archlinux.vim
 
+    set number
+    filetype plugin on
+    syntax on
+
+    call plug#begin()
+    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/limelight.vim'
+    call plug#end()
+#Inside nvim
+:PlugInstall
 
 #Bluetooth
 sudo pacman bluez bluez-utils
@@ -201,20 +224,22 @@ sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 sudo hciconfig hci0 up #Without that bluetoothwtl won't work
 bluetoothctl
-sudo nano /etc/udev/rules.d/10-local.rules: #Start bluetooth everytime
-  #Set bluetooth power up 
-  ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
+#Start bluetooth everytime
+sudo nano /etc/udev/rules.d/10-local.rules
+    #Set bluetooth power up 
+    ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
 
 #Firefox
-extension firefox :
-  stylish
-  custom new tab
-  ghostery
-  HTTPS everywhere
-  lastpass
-  ublock origin
-  CTR
-# file:///home/gawk/.config/firefox/page/index.html
+#Extensions
+#    stylish
+#    custom new tab
+#    ghostery
+#    HTTPS everywhere
+#    lastpass
+#    ublock origine
+#    tab groups
+#Home page
+#file:///home/gawk/.config/ffox/page/index.html
 
 #Login manager
 sudo systemctl enable slim.service
@@ -226,10 +251,5 @@ sudo git clone https://github.com/naglis/slim-minimal.git
 sudo pacman -S openssh
 sudo systemctl enable sshd.service
 sudo systemctl start sshd.service
-#hostname -i #if you want to know your local ip
-
-#Syncthing
-sudo pacman -S syncthing
-#http://docs.syncthing.net/users/autostart.html#using-systemd
-sudo systemctl enable syncthing@gawk.service
-sudo systemctl start syncthing@gawk.service
+#Local IP
+hostname -i
