@@ -233,13 +233,13 @@ sudo nano /etc/udev/rules.d/10-local.rules
 
 #Firefox
 #Extensions
-#    stylish
-#    custom new tab
-#    ghostery
-#    HTTPS everywhere
-#    lastpass
-#    ublock origine
-#    tab groups
+#   stylish
+#   custom new tab
+#   ghostery
+#   HTTPS everywhere
+#   lastpass
+#   ublock origine
+#   tab groups
 #Home page
 #file:///home/gawk/.config/ffox/page/index.html
 
