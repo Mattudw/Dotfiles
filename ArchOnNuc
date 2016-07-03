@@ -184,7 +184,9 @@ sudo pacman -S rsync
 #Ntfs support
 sudo pacman -S ntfs-3g 
 #Lemon font
-yaourt -S phallus-fonts-git 
+yaourt -S phallus-fonts-git
+#Creep font
+yaourt -S bdf-creep
 #Calculator
 yaourt -S concalc 
 #Lemonbar
