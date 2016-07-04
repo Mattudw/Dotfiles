@@ -237,8 +237,7 @@ sudo nano /etc/udev/rules.d/10-local.rules
 #   custom new tab
 #   ghostery
 #   HTTPS everywhere
-#   lastpass
-#   ublock origine
+#   ublock origin
 #   tab groups
 #Home page
 #file:///home/gawk/.config/ffox/page/index.html
