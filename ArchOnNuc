@@ -239,6 +239,7 @@ sudo nano /etc/udev/rules.d/10-local.rules
 #   HTTPS everywhere
 #   ublock origin
 #   tab groups
+#   auto unload tabs
 #Home page
 #file:///home/gawk/.config/ffox/page/index.html
 
