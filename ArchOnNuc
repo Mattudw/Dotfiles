@@ -137,7 +137,7 @@ sudo pacman -Syu
 sudo pacman -S xf86-video-intel mesa
 #Xorg
 sudo pacman -S xorg-server xorg-server-utils xorg-xinit 
-#Terminal
+#Terminal termite
 sudo pacman -S termite
 #Neovim
 sudo pacman -S neovim python2-neovim python-neovim
@@ -182,7 +182,9 @@ sudo pacman -S gimp
 #Sync files
 sudo pacman -S rsync
 #Ntfs support
-sudo pacman -S ntfs-3g 
+sudo pacman -S ntfs-3g
+#Hide unused mouse
+sudo pacman -S unclutter
 #Lemon font
 yaourt -S phallus-fonts-git
 #Creep font
@@ -197,6 +199,10 @@ yaourt -S dmenu2
 yaourt -S hsetroot
 #Keypass
 yaourt -S keeweb-desktop
+#Correct last command
+yaourt -S thefuck
+#Terminal xst
+yaourt -S xst-git
 
 #Vim setup
 #Vim-plug
