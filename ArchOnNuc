@@ -203,6 +203,8 @@ yaourt -S keeweb-desktop
 yaourt -S thefuck
 #Terminal xst
 yaourt -S xst-git
+#Share files online
+npm install -g cute-files
 
 #Vim setup
 #Vim-plug
