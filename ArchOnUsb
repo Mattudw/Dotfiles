@@ -1,86 +1,97 @@
-#https://wiki.archlinux.org/index.php/Installing_Arch_Linux_on_a_USB_key
+########################################
+#How to install Arch Linux on a usb key#
+########################################
 
-#Download iso from archlinux website
-#Take two keys, we will put the iso on the first and install the whole system on the second one
-#Download and use : Iso to usb
-#Boot on the first key with the second key plug in
-
-loadkeys fr #For french keyboard
-
-#Table
-lsblk #See where the wanted key is located, sdsomething (a, b, c, ...)
-cfdisk /dev/sdx #Partition table
-500M #Boot and don't forget to flag it as "Bootable"
-Reste #Home & Root 
-#/!\ Don't creat swap partition, it will cause long-term damage /!\
+#Preparation of the hard drive
+#Identify the devices
+lsblk
+#We consider that we will install Arch on "sda"
+#Partition table
+cfdisk /dev/sda
 
 #Partitions
+#Boot
+500M #Don't forget to flag it as "Bootable"
+#Home & Root 
+#The rest
+
+#Format
+#First, we have to check if everything is fine
 lsblk
-mkfs.ext4 -O "^has_journal" /dev/sdx1 #Boot, the journal is to save the lifetime of your key
-mkfs.ext4 -O "^has_journal" /dev/sdx2 #Home
-mount /dev/sdx2 /mnt
+#Boot
+mkfs.ext4 -O "^has_journal" /dev/sda1 #The journal is to save the lifetime of your key
+#Home
+mkfs.ext4 -O "^has_journal" /dev/sda2
+
+#Mount
+mount /dev/sda2 /mnt
 mkdir /mnt/boot
 mkdir /mnt/home
-mount /dev/sdx1 /mnt/boot
-mount /dev/sdx2 /mnt/home
+mount /dev/sda1 /mnt/boot
+mount /dev/sda2 /mnt/home
 
-#Get faster servers
-ping -c 3 www.google.com #To see if your connection is up
+#Mirrorlist
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.backup
-sed -i 's/ˆ#Server/Server/' /etc/pacman.d/mirrorlist.backup
+sed -i 's/^#Server/Server/' /etc/pacman.d/mirrorlist.backup
 rankmirrors -n 6 /etc/pacman.d/mirrorlist.backup > /etc/pacman.d/mirrorlist
 
-pacstrap /mnt base base-devel vim
+#Base package
+pacstrap -i /mnt base base-devel
+
+#Generate the fstab file
 genfstab -U -p /mnt >> /mnt/etc/fstab
-blkid or lsblk -f #They are pretty much the same
-cat /mnt/etc/fstab #Check if the UUID are the same as in blkid
 
 #Chroot
-arch-chroot /mnt
-nano /etc/locale.gen #uncomment fr_FR.UTF-8 #Or whatever your country is
+arch-chroot /mnt /bin/bash
+#Locale
+nano /etc/locale.gen
+#Uncomment en_US.UTF-8
 locale-gen
-echo LANG=fr_FR.UTF-8 > /etc/locale.conf #Same as before
-export LANG=fr_FR.UTF-8 #Again ...
-nano /etc/vconsole.conf #This is for those who don't have a qwerty keyboard, the file will be empty
-     KEYMAP=fr-pc #Write this
-ln -s /usr/share/zoneinfo/Europe/Paris > /etc/localtime #cd /usr/share/zoneinfo && ls #if you want to see more
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+
+#Time
+ln -s /usr/share/zoneinfo/Europe/Paris > /etc/localtime
 hwclock --systohc --utc
-echo dude > /etc/hostname #Replace dude by whatever you want (PC name)
-nano /etc/pacman.conf #uncomment : [multilib] & Include...
 
-#Yaourt
-#First way (it's the easy way but not always working)
-#Add at the end of /etc/pacman.conf
-     [archlinuxfr]
-     SigLevel = Never
-     Server = http://repo.archlinux.fr/$arch
-pacman -Sy #If you got an error(s) don't worry just go back to your pacman.conf and remove what you just write in and try the second way
+#Hostname
+echo dude > /etc/hostname
+
+#Pacman and Yaourt
+nano /etc/pacman.conf
+#Uncomment : [multilib] and the line after it
+#Add at the end
+    [archlinuxfr]
+    SigLevel = Never
+    Server = http://repo.archlinux.fr/$arch
+#Update pacman
+pacman -Sy
+#Install Yaourt (AUR)
 pacman -S yaourt
-#Second way
-git clone https://aur.archlinux.org/package-query.git
-cd package-query
-makepkg -si
-cd ..
-git clone https://aur.archlinux.org/yaourt.git
-cd yaourt
-makepkg -si
-
-passwd #Root password
-useradd -m -g users -G wheel,storage,power -s /bin/bash gawk #Change gawk by whatever you want (Username)
-passwd gawk #Password of the created user
-EDITOR=nano visudo
-     %wheel ALL=(ALL) ALL #Uncomment this line
-     Defaults rootpw #and add this one just after
+#Install bash completion
 pacman -S bash-completion
 
+#Root password
+passwd
+
+#Creation of a new user
+useradd -m -g users -G wheel,storage,power -s /bin/bash gawk
+passwd gawk
+
+EDITOR=nano visudo
+#Uncomment and add
+    %wheel ALL=(ALL) ALL
+Defaults rootpw
+
+#Mkinitcpio
 nano /etc/mkinitcpio.conf
-  HOOKS="base udev autodetect modconf block filesystems keyboard fsck" #Write "block" before "autodetect" and remove the "block", which should gives you : HOOKS="base udev block autodetext modconf filesystems keyboard fsck"
+  HOOKS="base udev autodetect modconf block filesystems keyboard fsck" #Write "block" before "autodetect" and remove the other "block", which should gives you : HOOKS="base udev block autodetect modconf filesystems keyboard fsck"
 mkinitcpio -p linux
 
 #Grub
 pacman -S grub
-grub-install --boot-directory=/boot --recheck --debug --target=i386-pc /dev/sdx #Change x by the letter of your key #if it failed try this : grub-install --boot-directory=/boot --recheck --debug --force --target=i386-pc /dev/sdx
+grub-install --boot-directory=/boot --recheck --debug --target=i386-pc /dev/sda #if it fails try this : grub-install --boot-directory=/boot --recheck --debug --force --target=i386-pc /dev/sdx
 grub-mkconfig -o /boot/grub/grub.cfg
+
 #Boot on several machine
 cd /boot/grub
 nano menu.lst #Empty file
@@ -90,28 +101,95 @@ nano menu.lst #Empty file
           APPEND root=UUID=X ro #Change X for your root partition UUID (blkid or lsblk -f)
           INITRD ../initramfs-linux.img
 
-exit #Exit chroot
+#Quit
+exit
 umount -R /mnt
 reboot
 
 #Wired
-ip link #See internet possible connection
-sudo systemctl enable dhcpcd@enp0s20u1.service #enp0s20u1 is the name of my wired connection
-sudo reboot
-
-#Wifi
-yaourt -S broadcom-wl #Special driver for XPS 13 2015 wifi card (no need for you)
-sudo pacman -S iw dialog wpa_supplicant #To get wifi work
-sudo wifi-menu -o #Connect to wifi network and creat a profile
-cd /etc/netctl #See created profile(s)
-sudo netctl start wlp2s0-* #start & enable profiles (wlp2s0 is the name of my wifi card)
-sudo netctl enable wlp2s0-*
+#Check internet connection
+ip link
+#We want the wired one here : enp3s0
+sudo systemctl enable dhcpcd@enp3s0.service
+sudo systemctl start dhcpcd@enp3s0.service
 
 #Software
-sudo pacman -S xf86-input-synaptics xf86-video-intel xf86-video-vesa xf86-video-ati xf86-video-nouveau mesa xorg-server xorg-server-utils xorg-xinit xorg-xrandr firefox vlc ranger vim-plugins wget feh zip unzip redshift htop slim python2 termite scrot chromium upower openssh cabextract gimp inkscape xsel rsync ntfs-3g libnotify bc#fuse-exfat tor privoxy i3lock nautilus gvfs udiskie udisks2 autofs 
-sudo pacman -Syyu
-yaourt -S phallus-fonts-git libeatmydata concalc utox-git lemonbar-git dmenu2 wmutils-git#everytime he ask for editing, write "no"/"n" if not write "yes"/"y"
-sudo reboot
+#Upgrade everything
+sudo pacman -Syu
+#Video dirvers
+sudo pacman -S xf86-video-intel xf86-input-synaptics xf86-video-intel xf86-video-vesa xf86-video-ati xf86-video-nouveau mesa
+#Xorg
+sudo pacman -S xorg-server xorg-server-utils xorg-xinit 
+#Terminal termite
+sudo pacman -S termite
+#Neovim
+sudo pacman -S neovim python2-neovim python-neovim
+#Sound
+sudo pacman -S alsa-utils 
+#Automount
+sudo pacman -S udiskie
+#Python
+sudo pacman -S python python2 python-pip python2-pip
+#Freebox
+sudo pacman -S cifs-utils 
+#Mail
+sudo pacman -S mutt
+#Android tools
+sudo pacman -S android-tools
+#Transparency
+sudo pacman -S compton
+#Firefox
+sudo pacman -S firefox 
+#CLI Vlc
+sudo pacman -S mpv 
+#CLI file manager
+sudo pacman -S ranger 
+#CLI download
+sudo pacman -S wget
+#Image viewer
+sudo pacman -S feh 
+#Zip
+sudo pacman -S zip unzip 
+#F.lux
+sudo pacman -S redshift
+#Process viewer
+sudo pacman -S htop
+#Login manager
+sudo pacman -S slim
+#Print screen
+sudo pacman -S scrot 
+#Ssh
+sudo pacman -S openssh 
+#Gimp
+sudo pacman -S gimp 
+#Sync files
+sudo pacman -S rsync
+#Ntfs support
+sudo pacman -S ntfs-3g
+#Hide unused mouse
+sudo pacman -S unclutter
+#Terminal navigator
+sudo pacman -S w3m
+#Lemon font
+yaourt -S phallus-fonts-git
+#Creep font
+yaourt -S bdf-creep
+#Calculator
+yaourt -S concalc 
+#Lemonbar
+yaourt -S lemonbar-git 
+#Dmenu
+yaourt -S dmenu2
+#Solid color wallpaper
+yaourt -S hsetroot
+#Keypass
+yaourt -S keeweb-desktop
+#Correct last command
+yaourt -S thefuck
+#Terminal xst
+yaourt -S xst-git
+#Share files online
+npm install -g cute-files
 
 #Save some key lifetime
 sudo mkdir /etc/systemd/journal.conf.d
@@ -119,136 +197,3 @@ sudo nano /etc/systemd/journal.conf.d/usbstick.conf #Empty file
      [Journal] 
      Storage=volatile 
      RuntimeMaxUse=30M
-
-#Login manager
-sudo systemctl enable slim.service
-sudo pacman -S archlinux-themes-slim
-sudo nano /etc/slim.conf
-
-#Vim setup 
-sudo nano /etc/vimrc #add this at the end of the file
-     set number
-     filetype plugin on
-     syntax on
-
-#Config
-cd
-git clone Https://github.com/Mattudw/Dotfiles.git
-#And install the config
-sudo rm -R .bashrc
-mv Dotfiles/* ~/
-mv Dotfiles/.* ~/ #if they ask something write "no"
-mkdir pics
-mkdir downl
-rm -R Dotfiles
-cd pics
-wget http://78.194.40.123/uploads/big/76621f9f3730961f2b630a6d3ef38b62.png
-sudo reboot
-
-#Bluetooth
-sudo pacman bluez-utils bluez
-#https://wiki.archlinux.org/index.php/Dell_XPS_13_%282015%29 #Bluetooth driver & for XPS 13 2105
-#cabextract 20662520_6c535fbfa9dca0d07ab069e8918896086e2af0a7.cab #For XPS 13 2015
-#hex2hcd BCM20702A1_001.002.014.1443.1572.hex #For XPS 13 2015
-#mv BCM20702A1_001.002.014.1443.1572.hcd /lib/firmware/brcm/BCM20702A1-0a5c-216f.hcd #For XPS 13 2015
-#ln -rs /lib/firmware/brcm/BCM20702A1-0a5c-216f.hcd /lib/firmware/brcm/BCM20702A0-0a5c-216f.hcd #For XPS 13 2015
-sudo systemctl enable bluetooth.service
-sudo systemctl start bluetooth.service
-sudo hciconfig hci0 up #Without that bluetoothwtl won't work
-bluetoothctl
-sudo nano /etc/udev/rules.d/10-local.rules: #Start bluetooth everytime
-  #Set bluetooth power up 
-  ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
-
-#GTK 2.0
-cd /usr/share/themes
-sudo mkdir themename #Choose a theme name
-cd themename
-sudo mkdir openbox-3
-sudo mkdir gtk-2.0
-GTK2_RC_FILES=/usr/share/themes/yellow/gtk-2.0/gtkrc
-
-#Firefox
-extension firefox :
-  stylish
-  custom new tab
-  ghostery
-  HTTPS everywhere
-  lastpass
-  ublock origin
-  CTR
-# file:///home/gawk/.config/firefox/page/index.html
-
-#Wacom
-sudo pacman -S udev
-yaourt -S wacom-udev xf86-input-wacom-git
-
-#Dwarf fortress
-sudo pacman -S dwarffortress
-yaourt -S dwarftherapist-git
-sudo setcap cap_sys_ptrace=eip /usr/bin/dwarftherapist
-#Texture : http://www.bay12forums.com/smf/index.php?topic=150763.msg6231814#msg6231814
-#Remove aquifer in : inorganic_stone_soil, inorganic_stone_mineral, inorganic_stone_layer (/raw/objects)
-
-#Pi zero OTG
-#https://learn.adafruit.com/turning-your-raspberry-pi-zero-into-a-usb-gadget?view=all
-sudo touch /etc/netctl/pizero
-sudo vim /etc/netctl/pizero
-     Description='A basic static ethernet connection'
-     Interface=enp0s20u2u2
-     Connection=ethernet
-     IP=static
-     Address=('192.168.7.1/24')
-     #Routes=('192.168.0.0/24 via 192.168.1.2')
-     Gateway='192.168.7.1'
-     DNS=('8.8.4.4' '8.8.8.8')
-
-#Openvpn
-inst openvpn
-sudo cp /usr/share/openvpn/examples/client.conf /etc/openvpn/client.conf
-#Download .ovpn
-sudo mv something.ovpn /etc/openvpn/vpn-country.conf
-cd /etc/openvpn
-sudo touch user.txt
-sudo vim user.txt #write you login + passw
-sudo touch update-resolv-conf.sh
-sudo vim update* #and paste this : https://raw.githubusercontent.com/masterkorp/openvpn-update-resolv-conf/master/update-resolv-conf.sh
-sudo chmod +x /etc/openvpn/update-resolv-conf.sh
-#Change vpn .conf from "auth-user-pass" to "auth-user-pass /etc/openvpn/user.txt"
-#Add this before <ca> :
-     up /etc/openvpn/update-resolv-conf.sh
-     down /etc/openvpn/update-resolv-conf.sh
-sudo systemctl start openvpn@vypr-uk
-
-#Usb key mount
-mkdir /mnt/usbstick
-
-#Sound
-sudo pacman -S alsa-utils
-alsamixer
-cd                            #For me
-touch .asoundrc               #For me  
-vim .asoundrc                 #For me
-     defaults.pcm.card 0      #For me
-     defaults.pcm.device 3    #For me
-     defaults.ctl.card 0      #For me
-
-#Tor
-sudo pacman -S tor privoxy
-sudo nano /etc/privoxy/config
-forward-socks5  /  127.0.0.1:9050 . #uncomment this line #line 1336
-sudo systemctl enable privoxy
-sudo systemctl enable tor
-sudo systemctl start privoxy
-sudo systemctl start tor
-# Firefox : In Preferences > Advanced > Network tab > Settings manually set Firefox to use the SOCKS proxy localhost with port 9050. Then you must type about:config into the address bar and void your warranty. Change network.proxy.socks_remote_dns to true and restart the browser. This channels all DNS requests through TOR's socks proxy. 
-# change firefox proxy to : localhost 8118
-
-#Raven
-#A very light Word, it's so new that we can't even find it in AUR repos yet
-wget https://github.com/robotlolita/raven/releases/download/v0.2.0-alpha/Raven-linux64.tar.gz
-mkdir .raven
-mkdir ~/docs/ravn #Where files while be stored
-tar -xvf Downloads/Raven-linux64.tar.gz -C ~/.raven
-inst gconf
-cd .raven && ./Raven.sh
