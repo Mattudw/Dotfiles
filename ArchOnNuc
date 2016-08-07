@@ -185,7 +185,7 @@ sudo pacman -S rsync
 sudo pacman -S ntfs-3g
 #Hide unused mouse
 sudo pacman -S unclutter
-#Terminal navigator
+#CLI browser
 sudo pacman -S w3m
 #Lemon font
 yaourt -S phallus-fonts-git
