@@ -199,14 +199,10 @@ yaourt -S lemonbar-git
 yaourt -S dmenu2
 #Solid color wallpaper
 yaourt -S hsetroot
-#Keypass
-yaourt -S keeweb-desktop
 #Correct last command
 yaourt -S thefuck
 #Terminal xst
 yaourt -S xst-git
-#Share files online
-npm install -g cute-files
 
 #Vim setup
 #Vim-plug
