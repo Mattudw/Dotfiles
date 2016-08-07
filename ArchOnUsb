@@ -168,7 +168,7 @@ sudo pacman -S rsync
 sudo pacman -S ntfs-3g
 #Hide unused mouse
 sudo pacman -S unclutter
-#Terminal navigator
+#CLI browser
 sudo pacman -S w3m
 #Lemon font
 yaourt -S phallus-fonts-git
@@ -182,14 +182,10 @@ yaourt -S lemonbar-git
 yaourt -S dmenu2
 #Solid color wallpaper
 yaourt -S hsetroot
-#Keypass
-yaourt -S keeweb-desktop
 #Correct last command
 yaourt -S thefuck
 #Terminal xst
 yaourt -S xst-git
-#Share files online
-npm install -g cute-files
 
 #Save some key lifetime
 sudo mkdir /etc/systemd/journal.conf.d
@@ -197,3 +193,61 @@ sudo nano /etc/systemd/journal.conf.d/usbstick.conf #Empty file
      [Journal] 
      Storage=volatile 
      RuntimeMaxUse=30M
+
+#Vim setup
+#Vim-plug
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+cd .config
+mkdir nvim
+cd nvim
+touch init.vim
+nano init.vim 
+#Add this at the end of the file
+    runtime! archlinux.vim
+
+    set number
+    filetype plugin on
+    syntax on
+
+    call plug#begin()
+    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/limelight.vim'
+    call plug#end()
+#Inside nvim
+:PlugInstall
+
+#Bluetooth
+sudo pacman bluez bluez-utils
+sudo systemctl enable bluetooth.service
+sudo systemctl start bluetooth.service
+sudo hciconfig hci0 up #Without that bluetoothwtl won't work
+bluetoothctl
+#Start bluetooth everytime
+sudo nano /etc/udev/rules.d/10-local.rules
+    #Set bluetooth power up 
+    ACTION=="add", KERNEL=="hci0", RUN+="/usr/bin/hciconfig hci0 up"
+
+#Firefox
+#Extensions
+#   stylish
+#   custom new tab
+#   ghostery
+#   HTTPS everywhere
+#   ublock origin
+#   tab groups
+#   auto unload tabs
+#Home page
+#file:///home/gawk/.config/ffox/page/index.html
+
+#Login manager
+sudo systemctl enable slim.service
+sudo nano /etc/slim.conf
+cd /usr/share/slim/themes/
+sudo git clone https://github.com/naglis/slim-minimal.git
+
+#Ssh
+sudo pacman -S openssh
+sudo systemctl enable sshd.service
+sudo systemctl start sshd.service
+#Local IP
+hostname -i
