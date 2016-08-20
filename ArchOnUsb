@@ -109,6 +109,8 @@ reboot
 #Wired
 #Check internet connection
 ip link
+#Wifi xps 13
+yaourt -S broadcom-wl
 #We want the wired one here : enp3s0
 sudo systemctl enable dhcpcd@enp3s0.service
 sudo systemctl start dhcpcd@enp3s0.service
