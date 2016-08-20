@@ -69,6 +69,8 @@ pacman -Sy
 pacman -S yaourt
 #Install bash completion
 pacman -S bash-completion
+#Wifi
+pacman -S iw wpa-supplicant dialog
 
 #Root password
 passwd
