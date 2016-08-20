@@ -125,7 +125,7 @@ sudo pacman -S termite
 #Sxhkd
 sudo pacman -S sxhkd
 #Neovim
-sudo pacman -S neovim python2-neovim python-neovim
+sudo pacman -S neovim
 #Sound
 sudo pacman -S alsa-utils 
 #Automount
