@@ -139,6 +139,8 @@ sudo pacman -S xf86-video-intel mesa
 sudo pacman -S xorg-server xorg-server-utils xorg-xinit 
 #Terminal termite
 sudo pacman -S termite
+#Sxhkd
+sudo pacman -S sxhkd
 #Neovim
 sudo pacman -S neovim python2-neovim python-neovim
 #Sound
@@ -187,6 +189,8 @@ sudo pacman -S ntfs-3g
 sudo pacman -S unclutter
 #CLI browser
 sudo pacman -S w3m
+#Wmutils
+yaourt -S wmutils-git
 #Lemon font
 yaourt -S phallus-fonts-git
 #Creep font
