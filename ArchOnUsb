@@ -142,8 +142,6 @@ sudo pacman -S cifs-utils
 sudo pacman -S mutt
 #Android tools
 sudo pacman -S android-tools
-#Transparency
-sudo pacman -S compton
 #Firefox
 sudo pacman -S firefox 
 #CLI Vlc
